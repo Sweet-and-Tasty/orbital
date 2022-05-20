@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
+const { accepts } = require("express/lib/request");
 const {
   isValidDate,
   isValidISODateString,
@@ -18,27 +19,26 @@ router.post(
   "/",
   [
     check("startDateTime", "start ate and time  required").custom((value) => {
-      console.log(value);
       return isValidISODateString(value);
     }),
     check("endDateTime", "end date and time required").custom((value) => {
-      console.log(req.body.startDateTime);
       return isValidISODateString(value);
     }),
     check("title", "enter a title for event").not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { start, end, title, description } = req.body;
+    const { startDateTime, endDateTime, title, description } = req.body;
     try {
       const newEvent = new Event({
-        start: req.body.start,
-        end: end,
-        title: title,
-        description: description,
+        startDateTime,
+        endDateTime,
+        title,
+        description,
       });
       const event = await newEvent.save();
       res.json(event);
