@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://deen123:deen123@devconnector.fbakw.mongodb.net/?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken",
+  "githubClientId": "9035a5ec1f0759c7a3c1",
+  "githubSecret": "03f37c2bafb8a1dce1503537218a60012302c413"
+}
