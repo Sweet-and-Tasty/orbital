@@ -1,3 +1,4 @@
+
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const express = require('express');
@@ -15,11 +16,12 @@ module.exports = function (req, res, next) {
   try {
     // if token is valid
     const decoded = jwt.verify(token, config.get('jwtSecret'));
-
+    
     req.user = decoded.user;
     next();
   } catch (err) {
     // if token is not valid
     res.status(401).json({ msg: 'Token is not valid' });
+
   }
 };

@@ -1,92 +1,79 @@
-const express = require('express');
-const router = express.Router(); // to use the router
-const bcrypt = require('bcryptjs');
-const auth = require('../../middleware/auth');
-const jwt = require('jsonwebtoken');
-const config = require('config');
-const { check, validationResult } = require('express-validator');
+const express = require("express");
+const router = express.Router();
+const auth = require("../../middleware/auth");
+const User = require("../../models/User");
+const gravatar = require("gravatar");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("config");
+const { check, validationResult } = require("express-validator");
 
-const User = require('../../models/User');
-
-// @route       GET api/auth
-// @desc        Test route
-// @access      Public
-router.get('/', auth, async (req, res) => {
+//@route GET api/auth
+//@desc Test route
+//@access Public
+router.get("/", auth, async (req, res) => {
   try {
-    // get back user data if auth is correct
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.id).select("-password");
     res.json(user);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send("server error");
   }
 });
 
-// CREATE USER AUTHENTICATION & LOGIN ROUTE
-// @route       POST api/auth
-// @desc        Authenticate user & get token   WE ARE DOING LOGIN HERE
-// @access      Public
+//@route POST api/auth
+//@desc authenticate user & get token
+//@access Public
 router.post(
-  '/',
+  "/",
   [
-    check('email', 'Please include a valid email').isEmail(),
-    check('password', 'Password is required').exists()
+    check("email", "please include email").isEmail(),
+    check("password", "password is required").exists(),
   ],
-
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({
-        // 400 is bad request
-        errors: errors.array()
-      });
+      return res.status(400).json({ errors: errors.array() });
     }
 
     const { email, password } = req.body;
 
     try {
-      // See if user exists
+      //see if user exist
       let user = await User.findOne({ email });
 
       if (!user) {
-        // no user send error
         return res
-          .status(400) // 400 is bad request
-          .json({ errors: [{ msg: 'Invalid credentials' }] });
+          .status(400)
+          .json({ errors: [{ msg: "invalid credentials" }] });
       }
 
-      // To make sure that user password matches, use bcrypt(method: compare); takes plain text password and encrypted password and compare to see if its a match
       const isMatch = await bcrypt.compare(password, user.password);
-
       if (!isMatch) {
         return res
-          .status(400) // 400 is bad request
-          .json({ errors: [{ msg: 'Invalid credentials' }] });
+          .status(400)
+          .json({ errors: [{ msg: "invalid credentials" }] });
       }
 
-      // Return jsonwebtoken
+      //return jsonwebtoken
       const payload = {
-        // payload that includes the user.id
         user: {
-          id: user.id // mongoose have an abstraction so can just do .id dont need to do ._id
-        }
-      };
-
-      jwt.sign(
-        payload, // pass in payload
-        config.get('jwtSecret'), // pass in secret
-        {
-          expiresIn: 360000 // this should expire in an hour (3600) when deployed. for testing, we will give it more hours
+          id: user.id,
         },
+      };
+      jwt.sign(
+        payload,
+        config.get("jwtSecret"),
+        { expiresIn: 360000 },
         (err, token) => {
-          // callback gets an error or token
           if (err) throw err;
           res.json({ token });
         }
       );
+      //res.send("User registered");
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server error');
+      res.status(500).send("server error");
     }
   }
 );
