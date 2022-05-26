@@ -1,80 +1,104 @@
-const express = require("express");
-const router = express.Router();
-const gravatar = require("gravatar");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const config = require("config");
-const { check, validationResult } = require("express-validator");
+const express = require('express');
+const router = express.Router(); // to use the router
+const gravatar = require('gravatar');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
+const { check, validationResult } = require('express-validator');
+const { restart } = require('nodemon');
 
-const User = require("../../models/User");
+// bring in our user model
+const User = require('../../models/User'); // ../../ is up two
 
-//@route POST api/users
-//@desc register user
-//@access Public
+// @route       POST api/users
+// @desc        Register user
+// @access      Public
 router.post(
-  "/",
+  '/',
   [
-    check("name", "name is required").not().isEmpty(),
-    check("email", "please include email").isEmail(),
-    check("password", "enter a password with 6 or more characters").isLength({
-      min: 6,
-    }),
+    check('name', 'Name is required').notEmpty(),
+    check('email', 'Please include a valid email').isEmail(),
+    check(
+      'password',
+      'Please enter a password with 6 or more characters'
+    ).isLength({ min: 6 })
   ],
+
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({
+        // 400 is bad request
+        errors: errors.array()
+      });
     }
 
     const { name, email, password } = req.body;
 
     try {
-      //see if user exist
+      // See if user exists
       let user = await User.findOne({ email });
 
       if (user) {
         return res
           .status(400)
-          .json({ errors: [{ msg: "user already exist" }] });
+          .json({ errors: [{ msg: 'User already exists' }] }); // 400 is bad request
       }
 
-      //get users gravatar
-      const avatar = gravatar.url(email, {
-        s: "200", //size
-        r: "pg", // rating
-        d: "mm", //idk
-      });
+      // // Get user's gravatar
+      // const avatar = gravatar.url(email, {
+      //   s: '200', // size
+      //   r: 'pg', // rating , cant have any naked people etc
+      //   d: 'mm' //dafault
+      // });
+
+      const avatar = normalize(
+        gravatar.url(email, {
+          s: '200',
+          r: 'pg',
+          d: 'mm'
+        }),
+        { forceHttps: true }
+      );
+
+      // create the user
       user = new User({
         name,
         email,
         avatar,
-        password,
+        password
       });
 
-      //encrypt password using bcrypt
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(password, salt);
-      await user.save();
+      // Encrypt/ hash the password
+      const salt = await bcrypt.genSalt(10); // 10 is recommended in the documentation
 
-      //return jsonwebtoken
+      user.password = await bcrypt.hash(password, salt); // this is the user that is getting saved
+
+      await user.save(); // promise, save the user in the database
+
+      // Return jsonwebtoken
       const payload = {
+        // ppayload that includes the user.id
         user: {
-          id: user.id,
-        },
+          id: user.id // mongoose have an abstraction so can just do .id dont need to do ._id
+        }
       };
+
       jwt.sign(
-        payload,
-        config.get("jwtSecret"),
-        { expiresIn: 360000 },
+        payload, // pass in payload
+        config.get('jwtSecret'), // pass in secret
+        {
+          expiresIn: 360000 // this should expire in an hour (3600) when deployed. for testing, we will give it more hours
+        },
         (err, token) => {
+          // callback gets an error or token
           if (err) throw err;
           res.json({ token });
         }
       );
-      //res.send("User registered");
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("server error");
+      res.status(500).send('Server error');
     }
   }
 );

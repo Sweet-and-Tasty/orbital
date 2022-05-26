@@ -1,7 +1,6 @@
 {
-  "mongoURI": "mongodb+srv://czement:qmpz1234@cluster0.tnasn.mongodb.net/orbitalDB?retryWrites=true&w=majority",
+  "mongoURI": "mongodb+srv://deen123:deen123@devconnector.fbakw.mongodb.net/?retryWrites=true&w=majority",
   "jwtSecret": "mysecrettoken",
-  "githubClientId": "4de41e95df39705d69c7",
-  "githubSecret": "a2e31e7a5b934e12bf6b4c81f0dc220ac88d4d29",
-  "githubToken": "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"
+  "githubClientId": "9035a5ec1f0759c7a3c1",
+  "githubSecret": "03f37c2bafb8a1dce1503537218a60012302c413"
 }

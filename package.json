@@ -1,7 +1,7 @@
 {
-  "name": "orbital",
+  "name": "mern-udemy",
   "version": "1.0.0",
-  "description": "class management",
+  "description": "Database for students",
   "main": "server.js",
   "scripts": {
     "start": "node server",
@@ -9,21 +9,20 @@
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "author": "sweet and tasty",
+  "author": "Deen",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.7",
     "express": "^4.18.1",
     "express-validator": "^6.14.0",
     "gravatar": "^1.8.2",
-    "iso-datestring-validator": "^2.2.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.3.2"
+    "mongoose": "^6.3.3",
+    "request": "^2.88.2"
   },
   "devDependencies": {
-    "concurrently": "^7.1.0",
+    "concurrently": "^7.2.0",
     "nodemon": "^2.0.16"
   }
 }
