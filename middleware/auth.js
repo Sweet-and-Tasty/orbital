@@ -3,7 +3,7 @@ const config = require("config");
 
 module.exports = function (req, res, next) {
   //get token from header
-  const token = req.header("x-auth-token");
+  const token = req.header("x-auth-token"); // this is the header key we wanna send the token in
 
   //check if no token
   if (!token) {
@@ -12,11 +12,13 @@ module.exports = function (req, res, next) {
 
   //verify token
   try {
+    // if token is valid
     const decoded = jwt.verify(token, config.get("jwtSecret"));
 
     req.user = decoded.user;
     next();
   } catch (err) {
+    // if token is not valid
     res.status(401).json({ msg: "token not valid" });
   }
 };
