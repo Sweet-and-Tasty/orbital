@@ -1,23 +1,15 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { useContext } from "react";
+import AlertContext from "../../context/alert/AlertContext";
 
-const Alert = ({ alerts }) => (
-  <div className="alert-wrapper">
-    {alerts.map((alert) => (
-      <div key={alert.id} className={`alert alert-${alert.alertType}`}>
-        {alert.msg}
-      </div>
-    ))}
-  </div>
-);
+function Alert() {
+  const { alert } = useContext(AlertContext);
+  return (
+    <div className="alert-wrapper">
+      {" "}
+      <strong>{alert?.msg}</strong>
+    </div>
+  );
+}
 
-Alert.propTypes = {
-  alerts: PropTypes.array.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  alerts: state.alert,
-});
-
-export default connect(mapStateToProps)(Alert);
+export default Alert;

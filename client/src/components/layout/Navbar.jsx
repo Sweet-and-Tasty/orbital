@@ -1,8 +1,6 @@
-import React from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { logout } from "../../actions/auth";
+import AuthContext from "../../context/auth/AuthContext";
 import {
   FaSwimmer,
   FaSignInAlt,
@@ -12,7 +10,7 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 
-export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+export const Navbar = () => {
   //span is used to hide the navbar when the screen is too small
   const authLinks = (
     <div className="flex-1 px-2 mx-2">
@@ -28,6 +26,8 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       </div>
     </div>
   );
+
+  const { isAuthenticated, loading, dispatch } = useContext(AuthContext);
 
   const guestLinks = (
     <>
@@ -46,7 +46,7 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     </>
   );
   return (
-    <nav class="navbar mb-12 shadow-lg bg-neutral text-neutral-content">
+    <nav class="navbar shadow-lg bg-neutral text-neutral-content">
       <div className="container mx-auto">
         <div className="flex-none px-2 mx-2">
           <Link to="/" className="text-lg font-bold align-middle">
@@ -59,12 +59,5 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     </nav>
   );
 };
-Navbar.propTypes = {
-  logout: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-};
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
 
-export default connect(mapStateToProps, { logout })(Navbar);
+export default Navbar;

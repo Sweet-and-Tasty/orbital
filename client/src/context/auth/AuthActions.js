@@ -1,18 +1,11 @@
+import { useContext } from "react";
 import axios from "axios";
-import {
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  USER_LOADED,
-  AUTH_ERROR,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  LOGOUT,
-} from "../actions/types";
-import setAuthToken from "../utils/setAuthToken";
-import { setAlert } from "./alert";
+import setAuthToken from "../../utils/setAuthToken";
+import setAlert from "../alert/AlertActions";
 
 //load user
 export const loadUser = () => async (dispatch) => {
+  console.log("loaduser called");
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
@@ -20,12 +13,12 @@ export const loadUser = () => async (dispatch) => {
     const res = await axios.get("/api/auth");
 
     dispatch({
-      type: USER_LOADED,
+      type: "USER_LOADED",
       payload: res.data,
     });
   } catch (err) {
     dispatch({
-      type: AUTH_ERROR,
+      type: "AUTH_ERROR",
     });
   }
 };
@@ -37,17 +30,17 @@ export const register =
     try {
       const res = await axios.post("/api/users", { name, email, password });
       dispatch({
-        type: REGISTER_SUCCESS,
+        type: "REGISTER_SUCCESS",
         payload: res.data,
       });
       dispatch(loadUser());
     } catch (err) {
       const errors = err.response.data.errors;
       if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+        errors.forEach((error) => setAlert(error.msg, "danger"));
       }
       dispatch({
-        type: REGISTER_FAIL,
+        type: "REGISTER_FAIL",
       });
     }
   };
@@ -55,10 +48,11 @@ export const register =
 //login user
 export const login = (email, password) => async (dispatch) => {
   try {
+    console.log("login called");
     const res = await axios.post("/api/auth", { email, password });
 
     dispatch({
-      type: LOGIN_SUCCESS,
+      type: "LOGIN_SUCCESS",
       payload: res.data,
     });
 
@@ -69,7 +63,7 @@ export const login = (email, password) => async (dispatch) => {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }
     dispatch({
-      type: LOGIN_FAIL,
+      type: "LOGIN_FAIL",
     });
   }
 };
@@ -77,6 +71,6 @@ export const login = (email, password) => async (dispatch) => {
 //logout user
 export const logout = () => (dispatch) => {
   dispatch({
-    type: LOGOUT,
+    type: "LOGOUT",
   });
 };

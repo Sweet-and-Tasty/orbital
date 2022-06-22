@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { connect } from "react-redux";
-import { setAlert } from "../../actions/alert";
-import { register } from "../../actions/auth";
+import AlertContext from "../../context/alert/AlertContext";
+import AuthContext from "../../context/auth/AuthContext";
+import { register } from "../../context/auth/AuthActions";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { FaLock } from "react-icons/fa";
 
-const Register = ({ setAlert, register, isAuthenticated }) => {
+const Register = () => {
+  const { setAlert } = useContext(AlertContext);
+  const { isAuthenticated, dispatch } = useContext(AuthContext);
   const [formData, setFromData] = useState({
     name: "",
     email: "",
@@ -21,6 +23,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     setFromData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
+    console.log("hi");
     e.preventDefault();
     if (password !== password2) {
       setAlert("passwords do not match", "danger"); //danger is a css style
@@ -130,33 +133,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 />
               </div>
             </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                  Remember me
-                </label>
-              </div>
-
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Forgot your password?
-                </a>
-              </div>
-            </div>
-
             <div>
               <button
                 type="submit"
@@ -179,17 +155,4 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   );
 };
 
-Register.propTypes = {
-  setAlert: PropTypes.func.isRequired,
-  register: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
-export default connect(mapStateToProps, {
-  setAlert,
-  register,
-})(Register);
+export default Register;

@@ -7,35 +7,38 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Login from "./components/auth/Login";
 import Alert from "./components/layout/Alert";
 import PrivateRoute from "./components/routing/PrivateRoute";
-import { loadUser } from "./actions/auth";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import setAuthToken from "./utils/setAuthToken";
-//redux
-import { Provider } from "react-redux";
-import store from "./store";
+import { AlertProvider } from "./context/alert/AlertContext";
+import { AuthProvider } from "./context/auth/AuthContext";
+import AuthContext from "./context/auth/AuthContext";
+import { loadUser } from "./context/auth/AuthActions";
 
 function App() {
+  const { isAuthenticated, token, dispatch } = useContext(AuthContext);
   useEffect(() => {
     // try to fetch a user, if no token or invalid token we
     // will get a 401 response from our API
-    store.dispatch(loadUser());
+    loadUser();
   }, []);
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Navbar />
-        <Alert />
-        <Routes>
-          <Route exact path="/" element={<Landing />} />
-          <Route exact path="/register" element={<Register />} />
-          <Route exact path="/login" element={<Login />} />
-          <Route
-            path="dashboard"
-            element={<PrivateRoute component={Dashboard} />}
-          />
-        </Routes>
-      </BrowserRouter>
-    </Provider>
+    <AlertProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Alert />
+          <Routes>
+            <Route exact path="/" element={<Landing />} />
+            <Route exact path="/register" element={<Register />} />
+            <Route exact path="/login" element={<Login />} />
+            <Route
+              path="dashboard"
+              element={<PrivateRoute component={Dashboard} />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </AlertProvider>
   );
 }
 
