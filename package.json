@@ -20,7 +20,8 @@
     "gravatar": "^1.8.2",
     "iso-datestring-validator": "^2.2.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.3.2"
+    "mongoose": "^6.3.2",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.7",
