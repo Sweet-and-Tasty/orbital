@@ -23,7 +23,9 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         </Link>
 
         <Link to="/" className="btn btn-ghost btn-sm rounded-btn">
-          <FaSignOutAlt className="inline pr-2 text-3xl" /> Logout
+          <a onClick={logout}>
+            <FaSignOutAlt className="inline pr-2 text-3xl" /> Logout
+          </a>
         </Link>
       </div>
     </div>
