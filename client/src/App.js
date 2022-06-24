@@ -36,23 +36,12 @@ function App() {
           <Route exact path="/" element={<Landing />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
-          {/* <Route exact path="/dashboard" element={<DashboardPage />} /> */}
-          {/* 
-          <Route
-            exact
-            path="/dashboard"
-            element={<PrivateRoute component={Dashboard} />}
-          /> */}
+          <Route exact path="/dashboard" element={<Login />} />
 
           <Route
             exact
             path="/new-meetup"
             element={<PrivateRoute component={NewMeetupPage} />}
-          />
-          <Route
-            exact
-            path="/dashboard"
-            element={<PrivateRoute component={Dashboard} />}
           />
           <Route
             exact

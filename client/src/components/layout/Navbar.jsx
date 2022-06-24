@@ -36,10 +36,10 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           Add New Course/ Class
         </Link>
 
-        <Link to="/dashboard" className="btn btn-ghost btn-sm rounded-btn">
+        {/* <Link to="/dashboard" className="btn btn-ghost btn-sm rounded-btn">
           <FaBattleNet className="inline pr-2 text-3xl" />
           Dashboard
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
@@ -55,6 +55,10 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
           <Link to="/login" className="btn btn-ghost btn-sm rounded-btn">
             <FaSignInAlt className="inline pr-2 text-3xl" /> Login
+          </Link>
+
+          <Link to="/dashboard" className="btn btn-ghost btn-sm rounded-btn">
+            <FaSignInAlt className="inline pr-2 text-3xl" /> dashboard
           </Link>
         </div>
       </div>
