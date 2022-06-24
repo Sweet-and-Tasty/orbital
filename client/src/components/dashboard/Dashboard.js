@@ -1,5 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+// this file should no longer be here and should be using calendar instead
+
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Dashboard = (props) => {
   return (
