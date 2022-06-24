@@ -1,23 +1,31 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-import NewMeetupForm from '../components/meetups/NewMeetupForm';
+import NewMeetupForm from "../components/meetups/NewMeetupForm";
 
-function NewMeetupPage() {
+const NewMeetupPage = async () => {
   const history = useNavigate();
   function addMeetupHandler(meetupData) {
     fetch(
-      'https://react-getting-started-a4afb-default-rtdb.asia-southeast1.firebasedatabase.app/meetups.json',
+      "https://react-getting-started-a4afb-default-rtdb.asia-southeast1.firebasedatabase.app/meetups.json",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(meetupData),
         headers: {
-          'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       }
     ).then(() => {
       // can use async await
-      history.replace('/');
+      history.replace("/");
     });
+    //const config = { headers: { "Content-Type": "application/json" } };
+    // try {
+    //  axios.post("api/event", meetupData, );
+    //  } catch (err) {
+    //   const errors = err.response.data.errors;
+    //  if (errors) {
+    //   errors.forEach((error) => { dispatch(setAlert(error.msg, "danger")); });
   }
 
   return (
@@ -26,6 +34,6 @@ function NewMeetupPage() {
       <NewMeetupForm onAddMeetup={addMeetupHandler} />
     </section>
   );
-}
+};
 
 export default NewMeetupPage;

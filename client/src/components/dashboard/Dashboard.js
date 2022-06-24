@@ -1,7 +1,14 @@
 // this file should no longer be here and should be using calendar instead
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
+import { useEffect } from "react";
+import axios from "axios";
+
+const handleClick = async () => {
+  const res = await axios.get("api/event");
+  console.log(res.data);
+};
 
 const Dashboard = (props) => {
   return (
@@ -11,6 +18,7 @@ const Dashboard = (props) => {
         you have reached the end of this demonstration, please pay 5 dollars to
         unlock the next dlc
       </p>
+      <button onClick={handleClick}>press me!</button>
     </div>
   );
 };
