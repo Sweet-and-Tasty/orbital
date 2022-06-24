@@ -1,13 +1,18 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import { setAlert } from "../../actions/alert";
 import Card from "../ui/Card";
 import classes from "./NewMeetupForm.module.css";
 import { Navigate } from "react-router-dom";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import moment from "moment";
+import { TextField } from "@mui/material";
 
 function NewMeetupForm(props) {
-  const startDateTimeInputRef = useRef();
-  const endDateTimeInputRef = useRef();
+  const [startDateTime, setStartDateTime] = useState(new Date(Date.now()));
+  const [endDateTime, setEndDateTime] = useState(new Date(Date.now()));
   const titleInputRef = useRef();
   const imageInputRef = useRef();
   const addressInputRef = useRef();
@@ -15,16 +20,14 @@ function NewMeetupForm(props) {
 
   const submitHandler = async () => {
     //event.preventDefault();
-    const enteredStartDateTime = startDateTimeInputRef.current.value;
-    const enteredEndDateTime = endDateTimeInputRef.current.value;
     const enteredTitle = titleInputRef.current.value;
     const enteredImage = imageInputRef.current.value;
     const enteredAddress = addressInputRef.current.value;
     const enteredDescription = descriptionInputRef.current.value;
 
     const meetupData = {
-      startDateTime: enteredStartDateTime,
-      endDateTime: enteredEndDateTime,
+      startDateTime: startDateTime,
+      endDateTime: endDateTime,
       title: enteredTitle,
       image: enteredImage,
       address: enteredAddress,
@@ -45,52 +48,59 @@ function NewMeetupForm(props) {
       }
     }
   };
+
+  const handleChange = (newValue) => {
+    setStartDateTime(newValue);
+    console.log(moment(newValue).format());
+  };
+
   return (
-    <Card>
-      <form className={classes.form} onSubmit={submitHandler}>
-        <div className={classes.control}>
-          <label htmlFor="startDateTime">Start Time</label>
-          <input
-            type="text"
-            required
-            id="startDateTime"
-            ref={startDateTimeInputRef}
-          />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="endDateTime">End Time</label>
-          <input
-            type="text"
-            required
-            id="endDateTime"
-            ref={endDateTimeInputRef}
-          />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="title">Title</label>
-          <input type="text" required id="title" ref={titleInputRef} />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="image">Image</label>
-          <input type="url" id="image" ref={imageInputRef} />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="address">Location</label>
-          <input type="text" required id="address" ref={addressInputRef} />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="description">Description</label>
-          <textarea
-            id="description"
-            rows="5"
-            ref={descriptionInputRef}
-          ></textarea>
-        </div>
-        <div className={classes.actions}>
-          <button>Add Course/ Class</button>
-        </div>
-      </form>
-    </Card>
+    <LocalizationProvider dateAdapter={AdapterMoment}>
+      <Card>
+        <form className={classes.form} onSubmit={submitHandler}>
+          <div className={(classes.control, "mb-5")}>
+            <DateTimePicker
+              label="Start Time"
+              value={startDateTime}
+              onChange={handleChange}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </div>
+          <div className={(classes.control, "mb-1")}>
+            <DateTimePicker
+              className="text-xl font-bold pb-2 mt-2"
+              label="End Time"
+              value={endDateTime}
+              onChange={handleChange}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="title">Title</label>
+            <input type="text" required id="title" ref={titleInputRef} />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="image">Image</label>
+            <input type="url" id="image" ref={imageInputRef} />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="address">Location</label>
+            <input type="text" required id="address" ref={addressInputRef} />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="description">Description</label>
+            <textarea
+              id="description"
+              rows="5"
+              ref={descriptionInputRef}
+            ></textarea>
+          </div>
+          <div className={classes.actions}>
+            <button>Add Course/ Class</button>
+          </div>
+        </form>
+      </Card>
+    </LocalizationProvider>
   );
 }
 

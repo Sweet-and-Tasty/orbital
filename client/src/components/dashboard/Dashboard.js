@@ -4,6 +4,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import axios from "axios";
+import Calendar from "./Calendar";
 
 const handleClick = async () => {
   const res = await axios.get("api/event");
