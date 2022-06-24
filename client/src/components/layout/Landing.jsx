@@ -1,11 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FaSignInAlt, FaUserPlus } from 'react-icons/fa';
+import React from "react";
+import { Link } from "react-router-dom";
+import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
 
 const Landing = () => {
   return (
-    <div className="bg-cover bg-center bg-[url(/src/img/showcase.jpg)]">
-      <div className="container mx-auto h-screen ">
+    <div className="custom-landing">
+      <div className="container mx-auto h-full ">
         <div className="flex flex-col items-center justify-center h-full">
           <h1 className="text-6xl text-bold text-white">
             Sweet and Tasty Academy

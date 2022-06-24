@@ -6,3 +6,17 @@
   border-radius: 0.5rem;
   opacity: 0.45;
 }
+
+.custom-landing {
+  position: relative;
+  background: url("./img/showcase.jpg") no-repeat center center/cover;
+  height: 100vh;
+  flex: flex-wrap;
+}
+
+.alert-wrapper {
+  position: fixed;
+  top: 4rem;
+  right: 2rem;
+  display: inline-block;
+}

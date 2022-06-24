@@ -7,7 +7,7 @@ export const setAlert =
     const id = uuidv4();
     dispatch({
       type: SET_ALERT,
-      payload: { msg, alertType, id }, // passed tp alert reducer
+      payload: { msg, alertType, id }, // passed to alert reducer
     });
 
     setTimeout(() => dispatch({ type: REMOVE_ALERT, payload: id }), timeout);
