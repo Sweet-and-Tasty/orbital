@@ -17,11 +17,6 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <div className="flex-1 px-2 mx-2">
       <div className="flex justify-end">
-        <Link to="/dashboard" className="btn btn-ghost btn-sm rounded-btn">
-          <FaChalkboard className="inline pr-2 text-3xl" />
-          Dashboard
-        </Link>
-
         <Link to="/" className="btn btn-ghost btn-sm rounded-btn">
           <a onClick={logout}>
             <FaSignOutAlt className="inline pr-2 text-3xl" /> Logout
@@ -40,6 +35,11 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           <FaBattleNet className="inline pr-2 text-3xl" />
           Add New Course/ Class
         </Link>
+
+        <Link to="/dashboard" className="btn btn-ghost btn-sm rounded-btn">
+          <FaBattleNet className="inline pr-2 text-3xl" />
+          Dashboard
+        </Link>
       </div>
     </div>
   );
@@ -56,17 +56,6 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           <Link to="/login" className="btn btn-ghost btn-sm rounded-btn">
             <FaSignInAlt className="inline pr-2 text-3xl" /> Login
           </Link>
-
-          {/* added in myself */}
-          {/* <Link to="/all-meetups" className="btn btn-ghost btn-sm rounded-btn">
-            <FaBattleNet className="inline pr-2 text-3xl" />
-            All Meetups
-          </Link>
-
-          <Link to="/new-meetup" className="btn btn-ghost btn-sm rounded-btn">
-            <FaBattleNet className="inline pr-2 text-3xl" />
-            Add New Meetup
-          </Link> */}
         </div>
       </div>
     </>
