@@ -25,6 +25,7 @@ router.post(
       return isValidISODateString(value);
     }),
     check("title", "enter a title for event").not().isEmpty(),
+    check("address", "enter an address for event").not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -32,13 +33,16 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { startDateTime, endDateTime, title, description } = req.body;
+    const { startDateTime, endDateTime, title, address, description, image } =
+      req.body;
     try {
       const newEvent = new Event({
         startDateTime,
         endDateTime,
         title,
+        address,
         description,
+        image,
       });
       const event = await newEvent.save();
       res.json(event);
@@ -48,5 +52,18 @@ router.post(
     }
   }
 );
+
+//@route GET api/event
+//@desc get all events
+//@access Public
+router.get("/", async (req, res) => {
+  try {
+    const events = await Event.find();
+    res.json(events);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server error");
+  }
+});
 
 module.exports = router;

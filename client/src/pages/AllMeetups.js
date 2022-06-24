@@ -1,34 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-import MeetupList from '../components/meetups/MeetupList';
+import MeetupList from "../components/meetups/MeetupList";
 
-function AllMeetupsPage() {
+const AllMeetupsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedMeetups, setLoadedMeetups] = useState([]);
 
   useEffect(() => {
-    setIsLoading(true);
-    fetch(
-      'https://react-getting-started-a4afb-default-rtdb.asia-southeast1.firebasedatabase.app/meetups.json'
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        const meetups = [];
-
-        for (const key in data) {
-          const meetup = {
-            id: key,
-            ...data[key]
-          };
-
-          meetups.push(meetup);
-        }
-
-        setIsLoading(false);
-        setLoadedMeetups(meetups);
-      });
+    const fetchData = async (dispatch) => {
+      const res = await axios.get("api/event");
+      setLoadedMeetups(res.data);
+      setIsLoading(false);
+    };
+    fetchData();
   }, []);
 
   if (isLoading) {
@@ -45,6 +30,6 @@ function AllMeetupsPage() {
       <MeetupList meetups={loadedMeetups} />
     </section>
   );
-}
+};
 
 export default AllMeetupsPage;
