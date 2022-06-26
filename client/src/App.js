@@ -9,8 +9,7 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import { loadUser } from './actions/auth';
 import { useEffect } from 'react';
 import setAuthToken from './utils/setAuthToken';
-import Dashboard from './components/dashboard/Dashboard';
-import Calendar from './components/dashboard/Calendar';
+
 //redux
 import { Provider } from 'react-redux';
 import store from './store';
