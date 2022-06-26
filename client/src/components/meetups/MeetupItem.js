@@ -1,23 +1,38 @@
-import Card from '../ui/Card';
-import classes from './MeetupItem.module.css';
+import Card from "../ui/Card";
+import classes from "./MeetupItem.module.css";
+import moment from "moment";
 
-let todayStr = new Date().toISOString().replace(/T.*$/, ''); // YYYY-MM-DD of today
+let todayStr = new Date().toISOString().replace(/T.*$/, ""); // YYYY-MM-DD of today
 
-function MeetupItem(props) {
+function MeetupItem({
+  image,
+  title,
+  id,
+  startDateTime,
+  endDateTime,
+  address,
+  description,
+}) {
   return (
     <li className={classes.item}>
       <Card>
         <div className={classes.image}>
-          <img src={props.image} alt={props.title} />
+          <img src={image} alt={title} />
         </div>
         <div className={classes.content}>
-          <h3>{props.title}</h3>
+          <h3>{title}</h3>
           {/* <h4>Course Start {todayStr(props.startDateTime)}</h4>
           <h4>Course End Date: {todayStr(props.endDateTime)}</h4> */}
-          <h4>Course Start Date: {props.startDateTime}</h4>
-          <h4>Course End Date: {props.endDateTime}</h4>
-          <address>{props.address}</address>
-          <p>{props.description}</p>
+          <h4>
+            Course Start Date:{" "}
+            {moment(startDateTime).format("MMMM Do YYYY, h:mm a")}
+          </h4>
+          <h4>
+            Course End Date:{" "}
+            {moment(endDateTime).format("MMMM Do YYYY, h:mm a")}
+          </h4>
+          <address>{address}</address>
+          <p>{description}</p>
         </div>
         <div className={classes.actions}>
           <button>Join Course/ Class</button>

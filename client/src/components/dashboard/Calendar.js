@@ -1,14 +1,15 @@
-import React from 'react';
-import FullCalendar, { formatDate } from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import { INITIAL_EVENTS, createEventId } from './event-utils';
+import React from "react";
+import axios from "axios";
+import FullCalendar, { formatDate } from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import { INITIAL_EVENTS, createEventId } from "./event-utils";
 
 export default class Calendar extends React.Component {
   state = {
     weekendsVisible: true,
-    currentEvents: []
+    currentEvents: [],
   };
 
   render() {
@@ -19,16 +20,16 @@ export default class Calendar extends React.Component {
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             headerToolbar={{
-              left: 'prev,next today',
-              center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay'
+              left: "prev,next today",
+              center: "title",
+              right: "dayGridMonth,timeGridWeek,timeGridDay",
             }}
             initialView="dayGridMonth"
             editable={true}
             selectable={true}
             selectMirror={true}
             dayMaxEvents={true}
-            weekends={this.state.weekendsVisible}
+            //weekends={this.state.weekendsVisible}
             initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
             select={this.handleDateSelect}
             eventContent={renderEventContent} // custom render function
@@ -41,47 +42,49 @@ export default class Calendar extends React.Component {
             */
           />
         </div>
+        {console.log(INITIAL_EVENTS)}
+        {/*console.log(this.state.currentEvents)*/}
       </div>
     );
   }
 
-  renderSidebar() {
-    return (
-      <div className="calendar-sidebar">
-        <div className="calendar-sidebar-section">
-          <h2>Instructions</h2>
-          <ul>
-            <li>Select dates and you will be prompted to create a new event</li>
-            <li>Drag, drop, and resize events</li>
-            <li>Click an event to delete it</li>
-          </ul>
-        </div>
-        <div className="calendar-sidebar-section">
-          <label>
-            <input
-              type="checkbox"
-              checked={this.state.weekendsVisible}
-              onChange={this.handleWeekendsToggle}
-            ></input>
-            toggle weekends
-          </label>
-        </div>
-        <div className="calendar-sidebar-section">
-          <h2>All Events ({this.state.currentEvents.length})</h2>
-          <ul>{this.state.currentEvents.map(renderSidebarEvent)}</ul>
-        </div>
-      </div>
-    );
-  }
+  // renderSidebar() {
+  //   return (
+  //     <div className="calendar-sidebar">
+  //       <div className="calendar-sidebar-section">
+  //         <h2>Instructions</h2>
+  //         <ul>
+  //           <li>Select dates and you will be prompted to create a new event</li>
+  //           <li>Drag, drop, and resize events</li>
+  //           <li>Click an event to delete it</li>
+  //         </ul>
+  //       </div>
+  //       <div className="calendar-sidebar-section">
+  //         <label>
+  //           <input
+  //             type="checkbox"
+  //             checked={this.state.weekendsVisible}
+  //             onChange={this.handleWeekendsToggle}
+  //           ></input>
+  //           toggle weekends
+  //         </label>
+  //       </div>
+  //       <div className="calendar-sidebar-section">
+  //         <h2>All Events ({this.state.currentEvents.length})</h2>
+  //         <ul>{this.state.currentEvents.map(renderSidebarEvent)}</ul>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   handleWeekendsToggle = () => {
     this.setState({
-      weekendsVisible: !this.state.weekendsVisible
+      weekendsVisible: !this.state.weekendsVisible,
     });
   };
 
   handleDateSelect = (selectInfo) => {
-    let title = prompt('Please enter a new title for your event');
+    let title = prompt("Please enter a new title for your event");
     let calendarApi = selectInfo.view.calendar;
 
     calendarApi.unselect(); // clear date selection
@@ -92,7 +95,7 @@ export default class Calendar extends React.Component {
         title,
         start: selectInfo.startStr,
         end: selectInfo.endStr,
-        allDay: selectInfo.allDay
+        allDay: selectInfo.allDay,
       });
     }
   };
@@ -109,7 +112,7 @@ export default class Calendar extends React.Component {
 
   handleEvents = (events) => {
     this.setState({
-      currentEvents: events
+      currentEvents: events,
     });
   };
 }
@@ -128,9 +131,9 @@ function renderSidebarEvent(event) {
     <li key={event.id}>
       <b>
         {formatDate(event.start, {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric'
+          year: "numeric",
+          month: "short",
+          day: "numeric",
         })}
       </b>
       <i>{event.title}</i>
