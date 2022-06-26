@@ -45,7 +45,7 @@ function App() {
           <Route
             exact
             path="/dashboard"
-            element={<PrivateRoute component={Dashboard} />}
+            element={<PrivateRoute component={DashboardPage} />}
           />
           <Route
             exact

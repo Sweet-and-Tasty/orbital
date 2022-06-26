@@ -33,7 +33,7 @@ export default class Calendar extends React.Component {
             select={this.handleDateSelect}
             eventContent={renderEventContent} // custom render function
             eventClick={this.handleEventClick}
-            eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
+            // eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
             /* you can update a remote database when these fire:
             eventAdd={function(){}}
             eventChange={function(){}}
