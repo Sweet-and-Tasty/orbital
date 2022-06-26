@@ -13,7 +13,7 @@ export default class Calendar extends React.Component {
 
   render() {
     return (
-      <div className="calendar">
+      <div className="calendar container mx-auto">
         {/* {this.renderSidebar()} */}
         <div className="calendar-main container mx-auto">
           <FullCalendar
