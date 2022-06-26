@@ -36,13 +36,6 @@ function App() {
           <Route exact path="/" element={<Landing />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
-          {/* <Route exact path="/dashboard" element={<DashboardPage />} /> */}
-          {/* 
-          <Route
-            exact
-            path="/dashboard"
-            element={<PrivateRoute component={Dashboard} />}
-          /> */}
 
           <Route
             exact

@@ -1,25 +1,25 @@
-import { useRef, useState } from "react";
-import axios from "axios";
-import { setAlert } from "../../actions/alert";
-import Card from "../ui/Card";
-import classes from "./NewMeetupForm.module.css";
-import { Navigate } from "react-router-dom";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import moment from "moment";
-import { TextField } from "@mui/material";
+import { useRef, useState } from 'react';
+import axios from 'axios';
+import { setAlert } from '../../actions/alert';
+import Card from '../ui/Card';
+import classes from './NewMeetupForm.module.css';
+import { Navigate } from 'react-router-dom';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import moment from 'moment';
+import { TextField } from '@mui/material';
 
 function NewMeetupForm(props) {
-  const [startDateTime, setStartDateTime] = useState(new Date(Date.now()));
-  const [endDateTime, setEndDateTime] = useState(new Date(Date.now()));
+  const [startDateTime, setStartDateTime] = useState(new Date());
+  const [endDateTime, setEndDateTime] = useState(new Date());
   const titleInputRef = useRef();
   const imageInputRef = useRef();
   const addressInputRef = useRef();
   const descriptionInputRef = useRef();
 
   const submitHandler = async () => {
-    //event.preventDefault();
+    // event.preventDefault();
     const enteredTitle = titleInputRef.current.value;
     const enteredImage = imageInputRef.current.value;
     const enteredAddress = addressInputRef.current.value;
@@ -31,26 +31,31 @@ function NewMeetupForm(props) {
       title: enteredTitle,
       image: enteredImage,
       address: enteredAddress,
-      description: enteredDescription,
+      description: enteredDescription
     };
     try {
-      const res = axios.post("api/event", meetupData);
+      const res = axios.post('api/event', meetupData);
       if (res.status === 200) {
-        setAlert("Meetup added successfully", "success");
+        setAlert('Meetup added successfully', 'success');
         return <Navigate to="/" />;
       }
     } catch (err) {
       const errors = err.response.data.errors;
       if (errors) {
         errors.forEach((error) => {
-          setAlert(error.msg, "danger");
+          setAlert(error.msg, 'danger');
         });
       }
     }
   };
 
-  const handleChange = (newValue) => {
+  const handleChangeStartDateTime = (newValue) => {
     setStartDateTime(newValue);
+    console.log(moment(newValue).format());
+  };
+
+  const handleChangeEndDateTime = (newValue) => {
+    setEndDateTime(newValue);
     console.log(moment(newValue).format());
   };
 
@@ -58,20 +63,20 @@ function NewMeetupForm(props) {
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <Card>
         <form className={classes.form} onSubmit={submitHandler}>
-          <div className={(classes.control, "mb-5")}>
+          <div className={(classes.control, 'mb-5')}>
             <DateTimePicker
               label="Start Time"
               value={startDateTime}
-              onChange={handleChange}
+              onChange={handleChangeStartDateTime}
               renderInput={(params) => <TextField {...params} />}
             />
           </div>
-          <div className={(classes.control, "mb-1")}>
+          <div className={(classes.control, 'mb-1')}>
             <DateTimePicker
               className="text-xl font-bold pb-2 mt-2"
               label="End Time"
               value={endDateTime}
-              onChange={handleChange}
+              onChange={handleChangeEndDateTime}
               renderInput={(params) => <TextField {...params} />}
             />
           </div>
