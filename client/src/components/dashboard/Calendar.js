@@ -14,8 +14,8 @@ export default class Calendar extends React.Component {
   render() {
     return (
       <div className="calendar">
-        {this.renderSidebar()}
-        <div className="calendar-main">
+        {/* {this.renderSidebar()} */}
+        <div className="calendar-main container mx-auto">
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             headerToolbar={{
