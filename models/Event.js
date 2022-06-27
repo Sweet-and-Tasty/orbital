@@ -23,6 +23,12 @@ const EventSchema = new mongoose.Schema({
   image: {
     type: String,
   },
+  attendees: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
+  ],
 });
 
 module.exports = Event = mongoose.model("event", EventSchema);

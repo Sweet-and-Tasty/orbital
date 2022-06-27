@@ -10,6 +10,7 @@ import {
   FaInfo,
   FaChalkboard,
   FaSignOutAlt,
+  FaWallet,
 } from "react-icons/fa";
 
 export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
@@ -17,12 +18,10 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <div className="flex-1 px-2 mx-2">
       <div className="flex justify-end">
-        <Link to="/" className="btn btn-ghost btn-sm rounded-btn">
-          <a onClick={logout}>
-            <FaSignOutAlt className="inline pr-2 text-3xl" /> Logout
-          </a>
+        <Link to="/dashboard" className="btn btn-ghost btn-sm rounded-btn">
+          <FaBattleNet className="inline pr-2 text-3xl" />
+          Dashboard
         </Link>
-
         {/* added in myself */}
         {/* <Link to="/all-meetups">All Meetups</Link> */}
         <Link to="/all-meetups" className="btn btn-ghost btn-sm rounded-btn">
@@ -36,9 +35,15 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           Add New Course/ Class
         </Link>
 
-        <Link to="/dashboard" className="btn btn-ghost btn-sm rounded-btn">
-          <FaBattleNet className="inline pr-2 text-3xl" />
-          Dashboard
+        <Link to="/credit" className="btn btn-ghost btn-sm rounded-btn">
+          <FaWallet className="inline pr-2 text-3xl" />
+          Credit
+        </Link>
+
+        <Link to="/" className="btn btn-ghost btn-sm rounded-btn">
+          <a onClick={logout}>
+            <FaSignOutAlt className="inline pr-2 text-3xl" /> Logout
+          </a>
         </Link>
       </div>
     </div>

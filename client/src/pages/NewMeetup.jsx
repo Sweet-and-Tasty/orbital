@@ -1,6 +1,3 @@
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
 import NewMeetupForm from "../components/meetups/NewMeetupForm";
 
 const NewMeetupPage = () => {

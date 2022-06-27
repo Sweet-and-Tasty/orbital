@@ -18,7 +18,8 @@ import store from "./store";
 // import { Route, Switch } from 'react-router-dom';
 import AllMeetupsPage from "./pages/AllMeetups";
 import NewMeetupPage from "./pages/NewMeetup";
-import DashboardPage from "./pages/Dashboard";
+import Dashboard from "./components/dashboard/Dashboard";
+import Credit from "./pages/Credit";
 
 function App() {
   useEffect(() => {
@@ -38,13 +39,19 @@ function App() {
 
           <Route
             exact
+            path="/credit"
+            element={<PrivateRoute component={Credit} />}
+          />
+
+          <Route
+            exact
             path="/new-meetup"
             element={<PrivateRoute component={NewMeetupPage} />}
           />
           <Route
             exact
             path="/dashboard"
-            element={<PrivateRoute component={DashboardPage} />}
+            element={<PrivateRoute component={Dashboard} />}
           />
           <Route
             exact

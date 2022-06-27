@@ -10,6 +10,24 @@ export default class Calendar extends React.Component {
   state = {
     weekendsVisible: true,
     currentEvents: [],
+    events: [],
+  };
+
+  componentDidMount() {
+    axios
+      .get("/events")
+      .then((response) => {
+        this.setState({ event: response.data });
+        console.log({ calendarEvents: response.data });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  handleEventClick = ({ event, el }) => {
+    this.toggle();
+    this.setState({ event });
   };
 
   render() {
@@ -30,7 +48,7 @@ export default class Calendar extends React.Component {
             selectMirror={true}
             dayMaxEvents={true}
             //weekends={this.state.weekendsVisible}
-            initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
+            events={this.state.events} // alternatively, use the `events` setting to fetch from a feed
             select={this.handleDateSelect}
             eventContent={renderEventContent} // custom render function
             eventClick={this.handleEventClick}
@@ -76,6 +94,11 @@ export default class Calendar extends React.Component {
   //     </div>
   //   );
   // }
+
+  setEvents = () => async () => {
+    const res = await axios.get("api/event");
+    this.setState({ currentEvents: res.data });
+  };
 
   handleWeekendsToggle = () => {
     this.setState({
