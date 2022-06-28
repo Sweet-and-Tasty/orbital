@@ -18,12 +18,16 @@ const Event = require("../../models/Event");
 router.post(
   "/",
   [
-    check("startDateTime", "start ate and time  required").custom((value) => {
-      return isValidISODateString(value);
-    }),
-    check("endDateTime", "end date and time required").custom((value) => {
-      return isValidISODateString(value);
-    }),
+    check("startDateTime", "start date and time in ISO format required").custom(
+      (value) => {
+        return isValidISODateString(value);
+      }
+    ),
+    check("endDateTime", "end date and time in ISO format required").custom(
+      (value) => {
+        return isValidISODateString(value);
+      }
+    ),
     check("title", "enter a title for event").not().isEmpty(),
     check("address", "enter an address for event").not().isEmpty(),
   ],

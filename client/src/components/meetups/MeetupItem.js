@@ -2,8 +2,6 @@ import Card from "../ui/Card";
 import classes from "./MeetupItem.module.css";
 import moment from "moment";
 
-let todayStr = new Date().toISOString().replace(/T.*$/, ""); // YYYY-MM-DD of today
-
 function MeetupItem({
   image,
   title,

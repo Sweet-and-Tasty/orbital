@@ -8,7 +8,6 @@ import Alert from "./components/layout/Alert";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import { loadUser } from "./actions/auth";
 import { useEffect } from "react";
-import setAuthToken from "./utils/setAuthToken";
 
 //redux
 import { Provider } from "react-redux";

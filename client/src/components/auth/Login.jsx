@@ -3,7 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../../actions/auth";
-import { FaLockOpen, FaLock } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFromData] = useState({

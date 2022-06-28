@@ -7,8 +7,6 @@ import {
   FaSwimmer,
   FaSignInAlt,
   FaBattleNet,
-  FaInfo,
-  FaChalkboard,
   FaSignOutAlt,
   FaWallet,
 } from "react-icons/fa";
@@ -40,10 +38,12 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           Credit
         </Link>
 
-        <Link to="/" className="btn btn-ghost btn-sm rounded-btn">
-          <a onClick={logout}>
-            <FaSignOutAlt className="inline pr-2 text-3xl" /> Logout
-          </a>
+        <Link
+          to="/"
+          className="btn btn-ghost btn-sm rounded-btn"
+          onClick={logout}
+        >
+          <FaSignOutAlt className="inline pr-2 text-3xl" /> Logout
         </Link>
       </div>
     </div>
