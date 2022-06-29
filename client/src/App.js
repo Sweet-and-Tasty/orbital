@@ -19,6 +19,7 @@ import AllMeetupsPage from "./pages/AllMeetups";
 import NewMeetupPage from "./pages/NewMeetup";
 import Dashboard from "./components/dashboard/Dashboard";
 import Credit from "./pages/Credit";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   useEffect(() => {
@@ -35,6 +36,7 @@ function App() {
           <Route exact path="/" element={<Landing />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/forgot-password" element={<ForgotPassword />} />
 
           <Route
             exact

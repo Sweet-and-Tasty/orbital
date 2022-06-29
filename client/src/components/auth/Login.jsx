@@ -40,12 +40,12 @@ const Login = ({ login, isAuthenticated }) => {
               Sign in to your account
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
-              <a className="font-medium text-white">
+              <p className="font-medium text-white">
                 Don't have an account yet?
                 <Link to="/register" className="ml-1 hover:text-blue-500">
                   Register Now
                 </Link>
-              </a>
+              </p>
             </p>
           </div>
           <form
@@ -108,12 +108,12 @@ const Login = ({ login, isAuthenticated }) => {
               </div>
 
               <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-medium text-white-300 hover:text-blue-500"
+                <Link
+                  to="/forgot-password"
+                  className="font-medium text-white-100 hover:text-blue-500"
                 >
                   Forgot your password?
-                </a>
+                </Link>
               </div>
             </div>
 

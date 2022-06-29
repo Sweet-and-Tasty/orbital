@@ -1,10 +1,11 @@
 const cors = require("cors");
-const stripe = require("stripe")(
-  "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"
-);
+const config = require("config");
+const stripeSecretKey = config.get("stripeSecretKey");
+const stripe = require("stripe")(stripeSecretKey);
 const { v4: uuidv4 } = require("uuid");
 const express = require("express");
 const connectDB = require("./config/db");
+const nodemailer = require("nodemailer");
 
 const app = express();
 
@@ -72,6 +73,42 @@ app.post("/checkout", async (req, res) => {
   }
 
   res.json({ error, status });
+});
+
+//nodemailer
+
+app.post("/forgot-password", async (req, res) => {
+  let transporter = nodemailer.createTransport({
+    host: "smtp.mail.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: "sweetntasty@mail.com",
+      pass: "qmpz1234",
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  let message = {
+    from: ' "sweet & tasty academy", <sweetntasty@mail.com>',
+    to: " clement, hung.hin.wang@gmail.com",
+    subject: "Reset Password",
+    text: "Hello this is a testing email",
+  };
+
+  transporter.sendMail(message, (error, info) => {
+    if (error) {
+      console.log("Error occurred");
+      console.log(error.message);
+      return process.exit(1);
+    }
+
+    console.log("Message sent successfully!");
+    console.log(nodemailer.getTestMessageUrl(info));
+    res.send("successfully sent");
+  });
 });
 
 const PORT = process.env.PORT || 5000;
