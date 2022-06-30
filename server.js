@@ -2,11 +2,10 @@ const cors = require("cors");
 const config = require("config");
 const stripeSecretKey = config.get("stripeSecretKey");
 const stripe = require("stripe")(stripeSecretKey);
-const gmailAppPassword = config.get("gmailAppPassword");
+
 const { v4: uuidv4 } = require("uuid");
 const express = require("express");
 const connectDB = require("./config/db");
-const nodemailer = require("nodemailer");
 
 const app = express();
 
@@ -23,11 +22,13 @@ app.get("/", (req, res) => res.send("api running"));
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/event", require("./routes/api/event"));
+app.use("/api/email", require("./routes/api/email"));
 
 //stripe payment
 
 app.get("/credit", (req, res) => {
-  res.send("Add your Stripe Secret Key to the .require('stripe') statement!");
+  console.log("credit");
+  res.send("credit");
 });
 
 app.post("/checkout", async (req, res) => {
@@ -76,41 +77,41 @@ app.post("/checkout", async (req, res) => {
   res.json({ error, status });
 });
 
-//nodemailer
+// //nodemailer
 
-app.post("/forgot-password", async (req, res) => {
-  let transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: "phantomassasin2008@gmail.com",
-      pass: gmailAppPassword,
-    },
-    tls: {
-      rejectUnauthorized: false,
-    },
-  });
+// app.post("/forgot-password", async (req, res) => {
+//   let transporter = nodemailer.createTransport({
+//     host: "smtp.gmail.com",
+//     port: 587,
+//     secure: false, // true for 465, false for other ports
+//     auth: {
+//       user: "phantomassasin2008@gmail.com",
+//       pass: gmailAppPassword,
+//     },
+//     tls: {
+//       rejectUnauthorized: false,
+//     },
+//   });
 
-  let message = {
-    from: ' "sweet & tasty academy", <sweetntasty@mail.com>',
-    to: ` User of sweet & Tasty Academy, <${req.params.email}>`,
-    subject: "Reset Password",
-    html: `<p>please following this link to reset your password <a href="https://localhost3000/reset-password/${req.params.ID}">https://localhost3000/reset-password/${req.params.ID}</a></p>`,
-  };
+//   let message = {
+//     from: ' "sweet & tasty academy", <sweetntasty@mail.com>',
+//     to: ` User of sweet & Tasty Academy, <${req.params.email}>`,
+//     subject: "Reset Password",
+//     html: `<p>please following this link to reset your password <a href="https://localhost3000/reset-password/${req.params.ID}">https://localhost3000/reset-password/${req.params.ID}</a></p>`,
+//   };
 
-  transporter.sendMail(message, (error, info) => {
-    if (error) {
-      console.log("Error occurred");
-      console.log(error.message);
-      return process.exit(1);
-    }
+//   transporter.sendMail(message, (error, info) => {
+//     if (error) {
+//       console.log("Error occurred");
+//       console.log(error.message);
+//       return process.exit(1);
+//     }
 
-    console.log("Message sent successfully!");
-    console.log(nodemailer.getTestMessageUrl(info));
-    res.send("successfully sent");
-  });
-});
+//     console.log("Message sent successfully!");
+//     console.log(nodemailer.getTestMessageUrl(info));
+//     res.send("successfully sent");
+//   });
+// });
 
 const PORT = process.env.PORT || 5000;
 

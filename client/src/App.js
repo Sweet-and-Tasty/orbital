@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
@@ -29,7 +29,6 @@ function App() {
     store.dispatch(loadUser());
   }, []);
 
-  let id = useParams();
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -40,11 +39,7 @@ function App() {
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/forgot-password" element={<ForgotPassword />} />
-          <Route
-            path="/reset-password/:id"
-            id={id}
-            element={<ResetPassword />}
-          />
+          <Route path="/reset-password/:id" element={<ResetPassword />} />
 
           <Route
             exact

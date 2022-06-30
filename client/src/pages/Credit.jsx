@@ -22,6 +22,9 @@ const Credit = ({ auth: { user } }) => {
       const res = await axios(`/api/users/${user._id}`, config);
       setCredit(res.data.credits);
       console.log(res.data.credits);
+
+      const rest = axios.get("/credit");
+      console.log(rest);
     };
     fetchData();
   }, [user._id]);

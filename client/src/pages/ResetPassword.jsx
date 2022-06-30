@@ -1,14 +1,45 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
-function ResetPassword({ id }) {
+function ResetPassword() {
+  let { id } = useParams();
+
   const [newPassword, setNewPassword] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const setPW = async () => {
+    try {
+      const res = await axios.post(`/api/users/${id}`, { newPassword });
+      console.log(newPassword);
+      console.log(res);
+      setSubmitted(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const onChange = (e) => setNewPassword(e.target.value);
   const onSubmit = (e) => {
     e.preventDefault();
-    axios.post(`api/users/${id}`, newPassword);
+    setPW();
+    setSubmitted(true);
   };
+
+  if (submitted) {
+    return (
+      <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <div>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-white-100">
+              Password reset successful
+            </h2>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

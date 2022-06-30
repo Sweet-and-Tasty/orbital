@@ -5,17 +5,20 @@ function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [ID, setID] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const onChange = (e) => setEmail(e.target.value);
+  const onChange = (e) => {
+    setEmail(e.target.value);
+  };
 
   const fetchData = async () => {
     const res = await axios.get(`/api/users/${email}`);
     setID(res.data._id);
     console.log(ID);
+    console.log(email);
   };
   const onSubmit = (e) => {
     e.preventDefault();
     fetchData();
-    axios.post("/forgot-password", { email, ID });
+    axios.post("/api/email", { email, ID });
     setSubmitted(true);
   };
 

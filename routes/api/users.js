@@ -35,7 +35,7 @@ router.get("/:email", async (req, res) => {
 //@route get api/users/:id
 //@desc get user by id
 //@access Private
-router.get(":id", auth, async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
     if (!user) {
@@ -151,7 +151,6 @@ router.post(
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(newPassword, salt);
       await user.save();
-
       res.send(newPassword);
     } catch (err) {
       console.error(err.message);
