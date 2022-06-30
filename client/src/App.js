@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
@@ -20,6 +20,7 @@ import NewMeetupPage from "./pages/NewMeetup";
 import Dashboard from "./components/dashboard/Dashboard";
 import Credit from "./pages/Credit";
 import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   useEffect(() => {
@@ -27,6 +28,8 @@ function App() {
     // will get a 401 response from our API
     store.dispatch(loadUser());
   }, []);
+
+  let id = useParams();
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -37,6 +40,11 @@ function App() {
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/forgot-password" element={<ForgotPassword />} />
+          <Route
+            path="/reset-password/:id"
+            id={id}
+            element={<ResetPassword />}
+          />
 
           <Route
             exact

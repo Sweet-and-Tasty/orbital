@@ -94,9 +94,9 @@ app.post("/forgot-password", async (req, res) => {
 
   let message = {
     from: ' "sweet & tasty academy", <sweetntasty@mail.com>',
-    to: " clement, hung.hin.wang@gmail.com",
+    to: ` User of sweet & Tasty Academy, <${req.params.email}>`,
     subject: "Reset Password",
-    text: "Hello this is a testing email",
+    html: `<p>please following this link to reset your password <a href="https://localhost3000/reset-password/${req.params.ID}">https://localhost3000/reset-password/${req.params.ID}</a></p>`,
   };
 
   transporter.sendMail(message, (error, info) => {
