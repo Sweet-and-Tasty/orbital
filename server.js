@@ -2,6 +2,7 @@ const cors = require("cors");
 const config = require("config");
 const stripeSecretKey = config.get("stripeSecretKey");
 const stripe = require("stripe")(stripeSecretKey);
+const gmailAppPassword = config.get("gmailAppPassword");
 const { v4: uuidv4 } = require("uuid");
 const express = require("express");
 const connectDB = require("./config/db");
@@ -79,12 +80,12 @@ app.post("/checkout", async (req, res) => {
 
 app.post("/forgot-password", async (req, res) => {
   let transporter = nodemailer.createTransport({
-    host: "smtp.mail.com",
+    host: "smtp.gmail.com",
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: "sweetntasty@mail.com",
-      pass: "qmpz1234",
+      user: "phantomassasin2008@gmail.com",
+      pass: gmailAppPassword,
     },
     tls: {
       rejectUnauthorized: false,
