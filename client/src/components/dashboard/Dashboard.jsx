@@ -23,7 +23,6 @@ const Dashboard = (props) => {
           id: event._id,
           title: event.title,
           start: moment(event.startDateTime).format(),
-          //end: formatDate(event.end),
         });
       });
 

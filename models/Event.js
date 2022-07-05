@@ -23,6 +23,10 @@ const EventSchema = new mongoose.Schema({
   image: {
     type: String,
   },
+  creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Owner",
+  },
   attendees: [
     {
       type: mongoose.Schema.Types.ObjectId,

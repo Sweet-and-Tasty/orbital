@@ -1,16 +1,31 @@
 import Card from "../ui/Card";
 import classes from "./MeetupItem.module.css";
 import moment from "moment";
+import { useState, useEffect } from "react";
+import { loadUser } from "../../actions/auth";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-function MeetupItem({
+const MeetupItem = ({
   image,
   title,
-  id,
+  _id,
   startDateTime,
   endDateTime,
   address,
   description,
-}) {
+  creator,
+  auth: { user },
+}) => {
+  const [userId, setUserId] = useState(null);
+  const [isOwner, setIsOwner] = useState(false);
+
+  useEffect(() => {
+    loadUser();
+    setUserId(user._id);
+    setIsOwner(creator === user._id);
+    console.log(creator, user._id);
+  }, []);
   return (
     <li className={classes.item}>
       <Card>
@@ -34,10 +49,19 @@ function MeetupItem({
         </div>
         <div className={classes.actions}>
           <button>Join Course/ Class</button>
+          {isOwner && <button className="ml-4"> Edit </button>}
         </div>
       </Card>
     </li>
   );
-}
+};
 
-export default MeetupItem;
+MeetupItem.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(MeetupItem);

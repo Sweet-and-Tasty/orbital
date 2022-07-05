@@ -14,6 +14,7 @@ function MeetupList({ meetups }) {
           title={meetup.title}
           address={meetup.address}
           description={meetup.description}
+          creator={meetup.creator}
         />
       ))}
     </ul>

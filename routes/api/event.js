@@ -10,13 +10,15 @@ const {
 } = require("iso-datestring-validator");
 //const auth = require("../../middleware/auth");
 const Event = require("../../models/Event");
+const auth = require("../../middleware/auth");
 
 //@route POST api/event
 //@desc create a event
-//@access Public
+//@access Private
 
 router.post(
   "/",
+  auth,
   [
     check("startDateTime", "start date and time in ISO format required").custom(
       (value) => {
@@ -47,6 +49,7 @@ router.post(
         address,
         description,
         image,
+        creator: req.user.id,
       });
       const event = await newEvent.save();
       res.json(event);
@@ -69,5 +72,57 @@ router.get("/", async (req, res) => {
     res.status(500).send("server error");
   }
 });
+
+//@route POST api/event/:id
+//@desc create a event
+//@access Private
+
+router.post(
+  "/:id",
+  auth,
+  [
+    check("startDateTime", "start date and time in ISO format required").custom(
+      (value) => {
+        return isValidISODateString(value);
+      }
+    ),
+    check("endDateTime", "end date and time in ISO format required").custom(
+      (value) => {
+        return isValidISODateString(value);
+      }
+    ),
+    check("title", "enter a title for event").not().isEmpty(),
+    check("address", "enter an address for event").not().isEmpty(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { startDateTime, endDateTime, title, address, description, image } =
+      req.body;
+    try {
+      let event = await Event.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          $set: {
+            startDateTime,
+            endDateTime,
+            title,
+            address,
+            description,
+            image,
+          },
+        },
+        { new: true }
+      );
+      res.json(event);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("server error");
+    }
+  }
+);
 
 module.exports = router;

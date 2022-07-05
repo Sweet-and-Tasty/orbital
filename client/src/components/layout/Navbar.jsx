@@ -9,6 +9,7 @@ import {
   FaBattleNet,
   FaSignOutAlt,
   FaWallet,
+  FaCalendarAlt,
 } from "react-icons/fa";
 
 export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
@@ -17,7 +18,7 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     <div className="flex-1 px-2 mx-2">
       <div className="flex justify-end">
         <Link to="/dashboard" className="btn btn-ghost btn-sm rounded-btn">
-          <FaBattleNet className="inline pr-2 text-3xl" />
+          <FaCalendarAlt className="inline pr-2 text-3xl" />
           Dashboard
         </Link>
         {/* added in myself */}
