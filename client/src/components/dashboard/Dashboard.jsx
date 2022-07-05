@@ -8,11 +8,11 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { INITIAL_EVENTS, createEventId } from "./event-utils";
+
 import momentPlugin from "@fullcalendar/moment";
 
 const Dashboard = (props) => {
-  const [events, setEvents] = useState(INITIAL_EVENTS);
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -25,21 +25,19 @@ const Dashboard = (props) => {
           start: moment(event.startDateTime).format(),
           //end: formatDate(event.end),
         });
-        console.log(event.start);
-        console.log(moment(event.start).format());
       });
-      console.log(res.data);
+
       setEvents(mapEvents);
     };
     fetchEvents();
-    console.log(events);
   }, []);
 
-  function renderEventContent(eventInfo) {
+  function EventContent(eventInfo) {
     return (
       <>
         <b>{eventInfo.timeText}</b>
-        <i>{eventInfo.event.title}</i>
+
+        <i className="ml-1"> {eventInfo.event.title}</i>
       </>
     );
   }
@@ -59,16 +57,6 @@ const Dashboard = (props) => {
     let calendarApi = selectInfo.view.calendar;
 
     calendarApi.unselect(); // clear date selection
-
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay,
-      });
-    }
   };
   return (
     <div className="container mx-auto my-auto ">
@@ -93,8 +81,9 @@ const Dashboard = (props) => {
         dayMaxEvents={true}
         //weekends={this.state.weekendsVisible}
         events={events} // alternatively, use the `events` setting to fetch from a feed
+        eventTimeFormat={"h:mm a"}
         select={handleDateSelect}
-        eventContent={renderEventContent} // custom render function
+        eventContent={EventContent} // custom render function
         eventClick={handleEventClick}
         // eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
         /* you can update a remote database when these fire:

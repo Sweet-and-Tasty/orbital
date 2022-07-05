@@ -23,7 +23,7 @@ const Login = ({ login, isAuthenticated }) => {
 
   //navigate if logged in
   if (isAuthenticated) {
-    return <Navigate to="/all-meetups" />;
+    return <Navigate to="/dashboard" />;
   }
 
   return (
