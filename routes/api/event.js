@@ -73,8 +73,21 @@ router.get("/", async (req, res) => {
   }
 });
 
+//@route GET api/event/:id
+//@desc get all events
+//@access Public
+router.get("/:id", async (req, res) => {
+  try {
+    const events = await Event.findById(req.params.id);
+    res.json(events);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server error");
+  }
+});
+
 //@route POST api/event/:id
-//@desc create a event
+//@desc update a event
 //@access Private
 
 router.post(

@@ -7,7 +7,7 @@ function MeetupList({ meetups }) {
       {meetups.map((meetup) => (
         <MeetupItem
           key={meetup.id}
-          id={meetup.id}
+          _id={meetup._id}
           image={meetup.image}
           startDateTime={meetup.startDateTime}
           endDateTime={meetup.endDateTime}

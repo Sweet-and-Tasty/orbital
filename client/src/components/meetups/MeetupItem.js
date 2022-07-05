@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { loadUser } from "../../actions/auth";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 const MeetupItem = ({
   image,
@@ -18,13 +19,12 @@ const MeetupItem = ({
   auth: { user },
 }) => {
   const [userId, setUserId] = useState(null);
-  const [isOwner, setIsOwner] = useState(false);
+  const [isCreator, setIsCreator] = useState(false);
 
   useEffect(() => {
     loadUser();
     setUserId(user._id);
-    setIsOwner(creator === user._id);
-    console.log(creator, user._id);
+    setIsCreator(creator === user._id);
   }, []);
   return (
     <li className={classes.item}>
@@ -49,7 +49,11 @@ const MeetupItem = ({
         </div>
         <div className={classes.actions}>
           <button>Join Course/ Class</button>
-          {isOwner && <button className="ml-4"> Edit </button>}
+          {isCreator && (
+            <Link to={`/edit-meetup/${_id}`}>
+              <button className="ml-4"> Edit </button>
+            </Link>
+          )}
         </div>
       </Card>
     </li>
