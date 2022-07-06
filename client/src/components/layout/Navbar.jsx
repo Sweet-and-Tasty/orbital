@@ -10,6 +10,8 @@ import {
   FaSignOutAlt,
   FaWallet,
   FaCalendarAlt,
+  FaRebel,
+  FaJediOrder,
 } from "react-icons/fa";
 
 export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
@@ -21,16 +23,19 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           <FaCalendarAlt className="inline pr-2 text-3xl" />
           Dashboard
         </Link>
-        {/* added in myself */}
-        {/* <Link to="/all-meetups">All Meetups</Link> */}
-        <Link to="/all-meetups" className="btn btn-ghost btn-sm rounded-btn">
+        <Link to="/my-meetups" className="btn btn-ghost btn-sm rounded-btn">
           <FaBattleNet className="inline pr-2 text-3xl" />
+          My Classes
+        </Link>
+
+        <Link to="/all-meetups" className="btn btn-ghost btn-sm rounded-btn">
+          <FaRebel className="inline pr-2 text-3xl" />
           All Courses/ Classes
         </Link>
 
         {/* <Link to="/new-meetup">Add New Meetups</Link> */}
         <Link to="/new-meetup" className="btn btn-ghost btn-sm rounded-btn">
-          <FaBattleNet className="inline pr-2 text-3xl" />
+          <FaJediOrder className="inline pr-2 text-3xl" />
           Add New Course/ Class
         </Link>
 

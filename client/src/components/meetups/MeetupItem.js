@@ -6,6 +6,7 @@ import { loadUser } from "../../actions/auth";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const MeetupItem = ({
   image,
@@ -20,12 +21,43 @@ const MeetupItem = ({
 }) => {
   const [userId, setUserId] = useState(null);
   const [isCreator, setIsCreator] = useState(false);
+  const [added, setAdded] = useState(false);
 
   useEffect(() => {
     loadUser();
     setUserId(user._id);
     setIsCreator(creator === user._id);
   }, []);
+
+  const handleAdd = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth-token": localStorage.getItem("token"),
+      },
+    };
+    try {
+      await axios.post(`/api/users/event/${user._id}`, { _id }, config);
+      setAdded(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleRemove = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth-token": localStorage.getItem("token"),
+      },
+    };
+    try {
+      await axios.post(`/api/users/remove-event/${user._id}`, { _id }, config);
+      setAdded(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <li className={classes.item}>
       <Card>
@@ -48,7 +80,10 @@ const MeetupItem = ({
           <p>{description}</p>
         </div>
         <div className={classes.actions}>
-          <button>Join Course/ Class</button>
+          {added && (
+            <button onClick={handleRemove}>Remove Course/ Class</button>
+          )}
+          {!added && <button onClick={handleAdd}>Add Course/ Class</button>}
           {isCreator && (
             <Link to={`/edit-meetup/${_id}`}>
               <button className="ml-4"> Edit </button>

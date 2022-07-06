@@ -159,4 +159,55 @@ router.post(
   }
 );
 
+//@route POST api/users/event/:id
+//@desc add event id into user's events array
+//@access Private
+
+router.post("/event/:id", auth, async (req, res) => {
+  const { _id } = req.body;
+
+  try {
+    //see if user exist
+    let user = await User.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $push: {
+          events: _id,
+        },
+      },
+      { new: true }
+    );
+
+    return res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).json({ msg: "server error" });
+  }
+});
+
+//@route POST api/users/remove-event/:id
+//@desc remove event id from user's events array
+//@access Private
+
+router.post("/remove-event/:id", auth, async (req, res) => {
+  const { _id } = req.body;
+
+  try {
+    //see if user exist
+    let user = await User.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $pull: {
+          events: _id,
+        },
+      },
+      { new: true }
+    );
+    return res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).json({ msg: "server error" });
+  }
+});
+
 module.exports = router;

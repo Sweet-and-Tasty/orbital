@@ -22,6 +22,7 @@ import Credit from "./pages/Credit";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import EditMeetup from "./components/meetups/EditMeetup";
+import MyMeetups from "./components/meetups/MyMeetups";
 
 function App() {
   useEffect(() => {
@@ -57,6 +58,11 @@ function App() {
             exact
             path="/edit-meetup/:id"
             element={<PrivateRoute component={EditMeetup} />}
+          />
+          <Route
+            exact
+            path="/my-meetups"
+            element={<PrivateRoute component={MyMeetups} />}
           />
           <Route
             exact

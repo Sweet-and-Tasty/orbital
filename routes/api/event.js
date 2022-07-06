@@ -74,7 +74,7 @@ router.get("/", async (req, res) => {
 });
 
 //@route GET api/event/:id
-//@desc get all events
+//@desc get event by Id
 //@access Public
 router.get("/:id", async (req, res) => {
   try {
