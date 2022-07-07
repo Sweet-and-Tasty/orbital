@@ -24,6 +24,12 @@ const MeetupItem = ({
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(`/api/users/${user._id}`);
+      setAdded(res.data.events.includes(_id));
+    };
+
+    fetchData();
     loadUser();
     setUserId(user._id);
     setIsCreator(creator === user._id);
