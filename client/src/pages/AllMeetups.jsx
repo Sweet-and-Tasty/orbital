@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-import MeetupList from "../components/meetups/MeetupList";
+import MeetupList from '../components/meetups/MeetupList';
 
 const AllMeetupsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -9,7 +9,7 @@ const AllMeetupsPage = () => {
 
   useEffect(() => {
     const fetchData = async (dispatch) => {
-      const res = await axios.get("api/event");
+      const res = await axios.get('api/event');
       setLoadedMeetups(res.data);
       setIsLoading(false);
     };
@@ -26,7 +26,7 @@ const AllMeetupsPage = () => {
 
   return (
     <section>
-      <h1>All Courses/ Classes</h1>
+      <p className="center-text">All Courses/ Classes</p>
       <MeetupList meetups={loadedMeetups} />
     </section>
   );
