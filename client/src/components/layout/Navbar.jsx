@@ -1,8 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { logout } from "../../actions/auth";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { logout } from '../../actions/auth';
 import {
   FaSwimmer,
   FaSignInAlt,
@@ -11,8 +11,8 @@ import {
   FaWallet,
   FaCalendarAlt,
   FaRebel,
-  FaJediOrder,
-} from "react-icons/fa";
+  FaJediOrder
+} from 'react-icons/fa';
 
 export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   //span is used to hide the navbar when the screen is too small
@@ -87,10 +87,10 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 };
 Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
-  auth: state.auth,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);
