@@ -33,7 +33,6 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           All Courses/ Classes
         </Link>
 
-        {/* <Link to="/new-meetup">Add New Meetups</Link> */}
         <Link to="/new-meetup" className="btn btn-ghost btn-sm rounded-btn">
           <FaJediOrder className="inline pr-2 text-3xl" />
           Add New Course/ Class
@@ -50,6 +49,10 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           onClick={logout}
         >
           <FaSignOutAlt className="inline pr-2 text-3xl" /> Logout
+        </Link>
+
+        <Link to="/feedback" className="btn btn-ghost btn-sm rounded-btn">
+          <FaCalendarAlt className="inline pr-2 text-3xl" /> Feedback
         </Link>
       </div>
     </div>

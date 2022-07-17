@@ -1,13 +1,13 @@
-import { useRef, useState } from "react";
-import axios from "axios";
-import { setAlert } from "../../actions/alert";
-import Card from "../ui/Card";
-import classes from "./NewMeetupForm.module.css";
-import { Navigate } from "react-router-dom";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { TextField } from "@mui/material";
+import { useRef, useState } from 'react';
+import axios from 'axios';
+import { setAlert } from '../../actions/alert';
+import Card from '../ui/Card';
+import classes from './NewMeetupForm.module.css';
+import { Navigate } from 'react-router-dom';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { TextField } from '@mui/material';
 
 function NewMeetupForm(props) {
   const [startDateTime, setStartDateTime] = useState(new Date());
@@ -30,19 +30,19 @@ function NewMeetupForm(props) {
       title: enteredTitle,
       image: enteredImage,
       address: enteredAddress,
-      description: enteredDescription,
+      description: enteredDescription
     };
     try {
-      const res = axios.post("api/event", meetupData);
+      const res = axios.post('api/event', meetupData);
       if (res.status === 200) {
-        setAlert("Meetup added successfully", "success");
+        setAlert('Meetup added successfully', 'success');
         return <Navigate to="/" />;
       }
     } catch (err) {
       const errors = err.response.data.errors;
       if (errors) {
         errors.forEach((error) => {
-          setAlert(error.msg, "danger");
+          setAlert(error.msg, 'danger');
         });
       }
     }
@@ -60,7 +60,7 @@ function NewMeetupForm(props) {
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <Card>
         <form className={classes.form} onSubmit={submitHandler}>
-          <div className={(classes.control, "mb-5")}>
+          <div className={(classes.control, 'mb-5')}>
             <DateTimePicker
               label="Start Time"
               value={startDateTime}
@@ -68,7 +68,7 @@ function NewMeetupForm(props) {
               renderInput={(params) => <TextField {...params} />}
             />
           </div>
-          <div className={(classes.control, "mb-1")}>
+          <div className={(classes.control, 'mb-1')}>
             <DateTimePicker
               className="text-xl font-bold pb-2 mt-2"
               label="End Time"
@@ -84,6 +84,7 @@ function NewMeetupForm(props) {
           <div className={classes.control}>
             <label htmlFor="image">Image</label>
             <input type="url" id="image" ref={imageInputRef} />
+            {/* <input type="file" accept="image/png, image/jpeg" /> */}
           </div>
           <div className={classes.control}>
             <label htmlFor="address">Location</label>

@@ -1,0 +1,14 @@
+.page-title {
+  font-family: 'Arial Black', Gadget, sans-serif;
+  font-size: 24px;
+  letter-spacing: 2px;
+  word-spacing: 2px;
+  color: #fcfcfc;
+  font-weight: 700;
+  text-decoration: none solid rgb(68, 68, 68);
+  font-style: normal;
+  font-variant: normal;
+  text-transform: uppercase;
+  text-align: center;
+  padding-top: 2rem;
+}

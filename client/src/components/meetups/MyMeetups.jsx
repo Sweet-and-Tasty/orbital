@@ -1,7 +1,8 @@
-import React from "react";
+import React from 'react';
+// import classes from './MyMeetups.module.css';
 
 function MyMeetups() {
-  return <div>MyMeetups</div>;
+  return <div className="page-title">My Classes</div>;
 }
 
 export default MyMeetups;
