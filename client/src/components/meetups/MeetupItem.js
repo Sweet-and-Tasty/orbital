@@ -93,6 +93,10 @@ const MeetupItem = ({
               <button className="ml-4"> Edit </button>
             </Link>
           )}
+          {/* make a feedback button */}
+          <Link to={`/feedback/${_id}`}>
+            <button className="ml-4"> Feedback </button>
+          </Link>
         </div>
       </Card>
     </li>

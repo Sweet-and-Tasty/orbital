@@ -1,10 +1,10 @@
 import MeetupItem from './MeetupItem';
-// import classes from './MeetupList.module.css';
+import classes from './MeetupList.module.css';
 
 function MeetupList({ meetups }) {
   return (
-    // <ul className={classes.list}>
-    <ul className="list">
+    <ul className={classes.list}>
+      {/* <ul className="list"> */}
       {meetups.map((meetup) => (
         <MeetupItem
           key={meetup.id}

@@ -26,7 +26,7 @@ const AllMeetupsPage = () => {
 
   return (
     <section>
-      <p className="center-text">All Courses/ Classes</p>
+      <p className="page-title">All Courses/ Classes</p>
       <MeetupList meetups={loadedMeetups} />
     </section>
   );
