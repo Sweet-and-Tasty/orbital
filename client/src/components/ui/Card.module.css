@@ -1,5 +1,19 @@
+/* .card {
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+} */
+
 .card {
   background-color: white;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  width: 1200px;
+  /* height: fit-content; */
+  max-height: 50%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  font-family: sans-serif;
 }

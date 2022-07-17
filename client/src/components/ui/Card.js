@@ -1,7 +1,7 @@
 import classes from './Card.module.css';
 
-function Card(props) {
+function Cards(props) {
   return <div className={classes.card}>{props.children}</div>;
 }
 
-export default Card;
+export default Cards;

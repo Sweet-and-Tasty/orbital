@@ -49,6 +49,23 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
+//@route get api/users/find/:id
+//@desc get user by id
+//@access Private
+router.get("/find/:id", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select("-password");
+
+    if (!user) {
+      return res.status(400).json({ msg: "this user does not exist" });
+    }
+    return res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server error");
+  }
+});
+
 //@route POST api/users
 //@desc register user
 //@access Public

@@ -1,12 +1,12 @@
-import Card from "../ui/Card";
-import classes from "./MeetupItem.module.css";
-import moment from "moment";
-import { useState, useEffect } from "react";
-import { loadUser } from "../../actions/auth";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import Card from '../ui/Card';
+import classes from './MeetupItem.module.css';
+import moment from 'moment';
+import { useState, useEffect } from 'react';
+import { loadUser } from '../../actions/auth';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const MeetupItem = ({
   image,
@@ -17,7 +17,7 @@ const MeetupItem = ({
   address,
   description,
   creator,
-  auth: { user },
+  auth: { user }
 }) => {
   const [userId, setUserId] = useState(null);
   const [isCreator, setIsCreator] = useState(false);
@@ -38,9 +38,9 @@ const MeetupItem = ({
   const handleAdd = async () => {
     const config = {
       headers: {
-        "Content-Type": "application/json",
-        "x-auth-token": localStorage.getItem("token"),
-      },
+        'Content-Type': 'application/json',
+        'x-auth-token': localStorage.getItem('token')
+      }
     };
     try {
       await axios.post(`/api/users/event/${user._id}`, { _id }, config);
@@ -53,9 +53,9 @@ const MeetupItem = ({
   const handleRemove = async () => {
     const config = {
       headers: {
-        "Content-Type": "application/json",
-        "x-auth-token": localStorage.getItem("token"),
-      },
+        'Content-Type': 'application/json',
+        'x-auth-token': localStorage.getItem('token')
+      }
     };
     try {
       await axios.post(`/api/users/remove-event/${user._id}`, { _id }, config);
@@ -72,15 +72,13 @@ const MeetupItem = ({
         </div>
         <div className={classes.content}>
           <h3>{title}</h3>
-          {/* <h4>Course Start {todayStr(props.startDateTime)}</h4>
-          <h4>Course End Date: {todayStr(props.endDateTime)}</h4> */}
           <h4>
-            Course Start Date:{" "}
-            {moment(startDateTime).format("MMMM Do YYYY, h:mm a")}
+            Course Start Date:{' '}
+            {moment(startDateTime).format('MMMM Do YYYY, h:mm a')}
           </h4>
           <h4>
-            Course End Date:{" "}
-            {moment(endDateTime).format("MMMM Do YYYY, h:mm a")}
+            Course End Date:{' '}
+            {moment(endDateTime).format('MMMM Do YYYY, h:mm a')}
           </h4>
           <address>{address}</address>
           <p>{description}</p>
@@ -102,11 +100,11 @@ const MeetupItem = ({
 };
 
 MeetupItem.propTypes = {
-  auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps)(MeetupItem);
