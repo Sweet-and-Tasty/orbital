@@ -1,37 +1,36 @@
 import Card from "../ui/Card";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { loadUser } from "../../actions/auth";
 import classes from "./MeetupItem.module.css";
 import moment from "moment";
-import { useState, useEffect } from "react";
-import { loadUser } from "../../actions/auth";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
-const MeetupItem = ({
-  image,
-  title,
-  _id,
-  startDateTime,
-  endDateTime,
-  address,
-  description,
-  creator,
-  auth: { user },
-}) => {
+function MyMeetupItem({ Id, auth: { user } }) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [startDateTime, setStartDateTime] = useState(Date.now());
+  const [endDateTime, setEndDateTime] = useState(Date.now());
+  const [address, setAddress] = useState("");
   const [isCreator, setIsCreator] = useState(false);
-  const [added, setAdded] = useState(false);
+  const [image, setImage] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get(`/api/users/find/${user._id}`);
-      setAdded(res.data.events.includes(_id));
+    const fetchData = async (dispatch) => {
+      const res = await axios.get(`api/event/${Id}`);
+      console.log(res.data);
+      setIsCreator(res.data.creator === user._id);
+      setTitle(res.data.title);
+      setDescription(res.data.description);
+      setStartDateTime(res.data.startDateTime);
+      setEndDateTime(res.data.endDateTime);
+      setAddress(res.data.address);
+      setImage(res.data.image);
     };
-
-    fetchData();
     loadUser();
-
-    setIsCreator(creator === user._id);
+    fetchData();
   }, []);
 
   const handleAdd = async () => {
@@ -42,8 +41,7 @@ const MeetupItem = ({
       },
     };
     try {
-      await axios.post(`/api/users/event/${user._id}`, { _id }, config);
-      setAdded(true);
+      await axios.post(`/api/users/event/${user._id}`, { Id }, config);
     } catch (error) {
       console.log(error);
     }
@@ -57,8 +55,7 @@ const MeetupItem = ({
       },
     };
     try {
-      await axios.post(`/api/users/remove-event/${user._id}`, { _id }, config);
-      setAdded(false);
+      await axios.post(`/api/users/remove-event/${user._id}`, { Id }, config);
     } catch (error) {
       console.log(error);
     }
@@ -83,26 +80,24 @@ const MeetupItem = ({
           <p>{description}</p>
         </div>
         <div className={classes.actions}>
-          {added && (
-            <button onClick={handleRemove}>Remove Course/ Class</button>
-          )}
-          {!added && <button onClick={handleAdd}>Add Course/ Class</button>}
+          <button onClick={handleRemove}>Remove Course/ Class</button>
+
           {isCreator && (
-            <Link to={`/edit-meetup/${_id}`}>
+            <Link to={`/edit-meetup/${Id}`}>
               <button className="ml-4"> Edit </button>
             </Link>
           )}
           {/* make a feedback button */}
-          <Link to={`/feedback/${_id}`}>
+          <Link to={`/feedback/${Id}`}>
             <button className="ml-4"> Feedback </button>
           </Link>
         </div>
       </Card>
     </li>
   );
-};
+}
 
-MeetupItem.propTypes = {
+MyMeetupItem.propTypes = {
   auth: PropTypes.object.isRequired,
 };
 
@@ -110,4 +105,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps)(MeetupItem);
+export default connect(mapStateToProps)(MyMeetupItem);

@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-import MeetupList from '../components/meetups/MeetupList';
+import MeetupList from "../components/meetups/MeetupList";
 
 const AllMeetupsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -9,9 +9,11 @@ const AllMeetupsPage = () => {
 
   useEffect(() => {
     const fetchData = async (dispatch) => {
-      const res = await axios.get('api/event');
+      const res = await axios.get("api/event");
       setLoadedMeetups(res.data);
       setIsLoading(false);
+      await console.log(loadedMeetups);
+      console.log(res.data);
     };
     fetchData();
   }, []);
