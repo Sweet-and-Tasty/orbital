@@ -23,6 +23,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import EditMeetup from "./components/meetups/EditMeetup";
 import MyMeetupsPage from "./pages/MyMeetupsPage";
+import AddProfile from "./pages/AddProfile";
 //import FeedbackPage from "./pages/Feedback";
 
 function App() {
@@ -74,6 +75,12 @@ function App() {
             exact
             path="/all-meetups"
             element={<PrivateRoute component={AllMeetupsPage} />}
+          />
+
+          <Route
+            exact
+            path="/add-profile"
+            element={<PrivateRoute component={AddProfile} />}
           />
 
           {/* <Route

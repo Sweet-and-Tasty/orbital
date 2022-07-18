@@ -108,6 +108,13 @@ router.post(
         avatar,
         password,
       });
+      user.profiles = [
+        {
+          name: user.name,
+          _id: user.id,
+          active: true,
+        },
+      ];
 
       //encrypt password using bcrypt
       const salt = await bcrypt.genSalt(10);
@@ -221,6 +228,31 @@ router.post("/remove-event/:id", auth, async (req, res) => {
       },
       { new: true }
     );
+    return res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).json({ msg: "server error" });
+  }
+});
+
+//@route POST api/users/profiles/:id
+//@desc add profile for user
+//@access Private
+
+router.post("/profiles/:id", auth, async (req, res) => {
+  const { name } = req.body;
+  try {
+    //see if user exist
+    let user = await User.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $push: {
+          profiles: { name: name },
+        },
+      },
+      { new: true }
+    );
+
     return res.json(user);
   } catch (err) {
     console.error(err.message);

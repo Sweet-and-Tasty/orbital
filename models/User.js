@@ -25,6 +25,21 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  profiles: [
+    {
+      name: {
+        type: String,
+        default: "nice kawk",
+      },
+      events: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Event",
+        },
+      ],
+    },
+  ],
+
   events: [
     {
       type: mongoose.Schema.Types.ObjectId,
