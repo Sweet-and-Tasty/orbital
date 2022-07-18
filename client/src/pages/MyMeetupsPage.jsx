@@ -10,15 +10,22 @@ const MyMeetupsPage = ({ auth: { user } }) => {
   const [myLoadedMeetups, setMyLoadedMeetups] = useState([]);
 
   useEffect(() => {
+    let eventsId = [];
     const fetchData = async (dispatch) => {
       const res = await axios.get(`api/users/find/${user._id}`);
       if (res.data.events.length > 0) {
-        const eventsId = [Object.assign({}, res.data.events)];
+        console.log(res.data.events);
+        res.data.events.map((event) => {
+          eventsId.push({ event });
+        });
+
+        //const eventsId = [Object.assign({}, res.data.events)];
         setMyLoadedMeetups(eventsId);
+        console.log(eventsId);
       } else {
         setMyLoadedMeetups([]);
       }
-      console.log(res.data.events);
+
       setIsLoading(false);
     };
     loadUser();

@@ -16,7 +16,7 @@ function MyMeetupList({ meetups }) {
     <ul className={classes.list}>
       {/* <ul className="list"> */}
       {meetups.map((meetup, index) => (
-        <MyMeetupItem key={index} Id={meetup[index]} />
+        <MyMeetupItem key={index} Id={meetup.event} />
       ))}
     </ul>
   );
