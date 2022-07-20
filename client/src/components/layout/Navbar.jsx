@@ -13,6 +13,8 @@ import {
   FaRebel,
   FaJediOrder,
   FaUserFriends,
+  FaSith,
+  FaDragon,
 } from "react-icons/fa";
 
 export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
@@ -20,43 +22,70 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <div className="flex-1 px-2 mx-2">
       <div className="flex justify-end">
-        <Link to="/dashboard" className="btn btn-ghost btn-sm rounded-btn">
+        <Link
+          to="/dashboard"
+          className="btn btn-ghost btn-sm rounded-btn flex-1"
+        >
           <FaCalendarAlt className="inline pr-2 text-3xl" />
           Dashboard
         </Link>
-        <Link to="/my-meetups" className="btn btn-ghost btn-sm rounded-btn">
-          <FaBattleNet className="inline pr-2 text-3xl" />
-          My Classes
-        </Link>
 
-        <Link to="/all-meetups" className="btn btn-ghost btn-sm rounded-btn">
-          <FaRebel className="inline pr-2 text-3xl" />
-          All Courses/ Classes
-        </Link>
+        <div class="dropdown dropdown-hover inline pr-2 btn btn-ghost btn-sm rounded-btn flex-1">
+          <label>
+            <FaDragon className="inline pr-2 text-3xl" />
+            Classes
+          </label>
+          <ul class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+            <Link
+              to="/my-meetups"
+              className="btn btn-ghost btn-sm rounded-btn flex-1"
+            >
+              <FaSith className="inline pr-2 text-3xl" />
+              My Classes
+            </Link>
 
-        <Link to="/new-meetup" className="btn btn-ghost btn-sm rounded-btn">
-          <FaJediOrder className="inline pr-2 text-3xl" />
-          Add New Course/ Class
-        </Link>
+            <Link
+              to="/all-meetups"
+              className="btn btn-ghost btn-sm rounded-btn flex-1"
+            >
+              <FaRebel className="inline pr-2 text-3xl" />
+              All Classes
+            </Link>
 
-        <Link to="/credit" className="btn btn-ghost btn-sm rounded-btn">
+            <Link
+              to="/new-meetup"
+              className="btn btn-ghost btn-sm rounded-btn flex-1"
+            >
+              <FaJediOrder className="inline pr-2 text-3xl" />
+              Add New Class
+            </Link>
+          </ul>
+        </div>
+
+        <Link to="/credit" className="btn btn-ghost btn-sm rounded-btn flex-1">
           <FaWallet className="inline pr-2 text-3xl" />
           Credit
         </Link>
 
         <Link
           to="/"
-          className="btn btn-ghost btn-sm rounded-btn"
+          className="btn btn-ghost btn-sm rounded-btn flex-1"
           onClick={logout}
         >
           <FaSignOutAlt className="inline pr-2 text-3xl" /> Logout
         </Link>
 
-        <Link to="/feedback" className="btn btn-ghost btn-sm rounded-btn">
+        <Link
+          to="/feedback"
+          className="btn btn-ghost btn-sm rounded-btn flex-1"
+        >
           <FaCalendarAlt className="inline pr-2 text-3xl" /> Feedback
         </Link>
 
-        <Link to="/add-profile" className="btn btn-ghost btn-sm rounded-btn">
+        <Link
+          to="/add-profile"
+          className="btn btn-ghost btn-sm rounded-btn flex-1"
+        >
           <FaUserFriends className="inline pr-2 text-3xl" /> Add Profile
         </Link>
       </div>
@@ -67,12 +96,15 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     <>
       <div className="flex-1 px-2 mx-2">
         <div className="flex justify-end">
-          <Link to="/register" className="btn btn-ghost btn-sm rounded-btn">
+          <Link
+            to="/register"
+            className="btn btn-ghost btn-sm rounded-btn flex-1"
+          >
             <FaBattleNet className="inline pr-2 text-3xl" />
             Register
           </Link>
 
-          <Link to="/login" className="btn btn-ghost btn-sm rounded-btn">
+          <Link to="/login" className="btn btn-ghost btn-sm rounded-btn flex-1">
             <FaSignInAlt className="inline pr-2 text-3xl" /> Login
           </Link>
         </div>
@@ -84,7 +116,7 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       <div className="container mx-auto">
         <div className="flex-none px-2 mx-2">
           <Link to="/" className="text-lg font-bold align-middle">
-            <FaSwimmer className="inline pr-2 text-5xl" />
+            <FaSwimmer className="inline pr-2 text-5xl md: text-2xl" />
             S&T Academy
           </Link>
         </div>
