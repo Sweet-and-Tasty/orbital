@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loadUser } from "../actions/auth";
 import axios from "axios";
-import { FaLock, FaUserPlus } from "react-icons/fa";
+import { FaUserPlus } from "react-icons/fa";
 
 function AddProfile({ auth: { user } }) {
   const [formData, setFromData] = useState({
@@ -17,6 +17,7 @@ function AddProfile({ auth: { user } }) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    const response = await axios.post("/api/profiles", formData);
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +26,7 @@ function AddProfile({ auth: { user } }) {
     };
     const res = await axios.post(
       `/api/users/profiles/${user._id}`,
-      formData,
+      response.data,
       config
     );
     console.log(formData);

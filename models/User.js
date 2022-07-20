@@ -27,16 +27,7 @@ const UserSchema = new mongoose.Schema({
   },
   profiles: [
     {
-      name: {
-        type: String,
-        default: "nice kawk",
-      },
-      events: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Event",
-        },
-      ],
+      type: mongoose.Schema.Types.ObjectId,
     },
   ],
 
