@@ -6,6 +6,23 @@ const { check, validationResult } = require("express-validator");
 const auth = require("../../middleware/auth");
 const Profile = require("../../models/Profile");
 
+//@route get api/profiles/:id
+//@desc get profile by id
+//@access Private
+router.get("/:id", auth, async (req, res) => {
+  try {
+    const profile = await Profile.findById(req.params.id);
+
+    if (!profile) {
+      return res.status(400).json({ msg: "this profile does not exist" });
+    }
+    return res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server error");
+  }
+});
+
 //@route POST api/profiles/
 //@desc create profile
 //@access Public
@@ -41,6 +58,13 @@ router.post(
 
 router.post("/event/:id", auth, async (req, res) => {
   const { _id } = req.body;
+
+  let profile = await Profile.findById(req.params.id);
+  if (profile.events.includes(_id)) {
+    return res
+      .status(400)
+      .json({ msg: "profile already registered for event" });
+  }
 
   try {
     //see if user exist

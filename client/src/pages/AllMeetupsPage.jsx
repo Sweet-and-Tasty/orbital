@@ -27,10 +27,10 @@ const AllMeetupsPage = () => {
   }
 
   return (
-    <section>
+    <div className="-z-50">
       <p className="page-title">All Courses/ Classes</p>
       <MeetupList meetups={loadedMeetups} />
-    </section>
+    </div>
   );
 };
 

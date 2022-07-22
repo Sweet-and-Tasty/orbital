@@ -184,9 +184,15 @@ router.post(
 router.post("/event/:id", auth, async (req, res) => {
   const { _id } = req.body;
 
+  //see if user has already registered for event
+  let user = await User.findById(req.params.id);
+  if (user.events.includes(_id)) {
+    return res.status(400).json({ msg: "user already registered for event" });
+  }
+
   try {
     //see if user exist
-    let user = await User.findOneAndUpdate(
+    user = await User.findOneAndUpdate(
       { _id: req.params.id },
       {
         $push: {

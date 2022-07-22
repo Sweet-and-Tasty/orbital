@@ -30,15 +30,16 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           Dashboard
         </Link>
 
-        <div class="dropdown dropdown-hover inline pr-2 btn btn-ghost btn-sm rounded-btn flex-1">
-          <label>
+        <div class="dropdown dropdown-hover inline btn btn-ghost btn-sm rounded-btn flex-1 relative z-9999 ">
+          <label className="m-1">
             <FaDragon className="inline pr-2 text-3xl" />
             Classes
           </label>
-          <ul class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+
+          <ul className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 z-9999 ">
             <Link
               to="/my-meetups"
-              className="btn btn-ghost btn-sm rounded-btn flex-1"
+              className="btn btn-ghost btn-sm rounded-btn flex-1 "
             >
               <FaSith className="inline pr-2 text-3xl" />
               My Classes
