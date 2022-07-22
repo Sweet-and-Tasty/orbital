@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { STATES } from "mongoose";
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import classes from './FeedbackList.module.css';
+import FeedbackCard from '../ui/FeedbackCard';
 
-function Feedback() {
+function FeedbackList() {
   let { id } = useParams();
   let tempFeedback = [];
   const [feedbackArray, setFeedbackArray] = useState([]);
@@ -25,13 +26,13 @@ function Feedback() {
 
   return (
     <>
-      {feedbackArray.map((feedbackItem, index) => (
-        <li key={index}>
-          <p>{feedbackItem.text}</p>
-        </li>
+      {feedbackArray.map((feedbackItem) => (
+        <ul className={classes.list}>
+          <FeedbackCard>{feedbackItem.text}</FeedbackCard>
+        </ul>
       ))}
     </>
   );
 }
 
-export default Feedback;
+export default FeedbackList;
