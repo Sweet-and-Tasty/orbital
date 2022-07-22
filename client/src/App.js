@@ -24,7 +24,7 @@ import ResetPassword from "./pages/ResetPassword";
 import EditMeetup from "./components/meetups/EditMeetup";
 import MyMeetupsPage from "./pages/MyMeetupsPage";
 import AddProfile from "./pages/AddProfile";
-//import FeedbackPage from "./pages/Feedback";
+import FeedbackPage from "./pages/Feedback";
 
 function App() {
   useEffect(() => {
@@ -83,11 +83,11 @@ function App() {
             element={<PrivateRoute component={AddProfile} />}
           />
 
-          {/* <Route
+          <Route
             exact
-            path="/feedback"
+            path="/feedback/:id"
             element={<PrivateRoute component={FeedbackPage} />}
-          ></Route> */}
+          ></Route>
         </Routes>
       </BrowserRouter>
     </Provider>

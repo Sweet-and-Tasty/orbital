@@ -21,18 +21,30 @@ const MeetupItem = ({
 }) => {
   const [isCreator, setIsCreator] = useState(false);
   const [added, setAdded] = useState(false);
-
+  const [profileId, setProfileId] = useState("");
+  let profilesId = [];
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(`/api/users/find/${user._id}`);
       setAdded(res.data.events.includes(_id));
+
+      if (res.data.profiles.length > 0) {
+        res.data.profiles.map((profile) => {
+          profilesId.push({ profile });
+        });
+      }
     };
 
-    fetchData();
     loadUser();
+    fetchData();
 
     setIsCreator(creator === user._id);
   }, []);
+
+  const handleChange = (e) => {
+    setProfileId(e.target.value);
+    console.log(profileId);
+  };
 
   const handleAdd = async () => {
     const config = {
@@ -41,11 +53,20 @@ const MeetupItem = ({
         "x-auth-token": localStorage.getItem("token"),
       },
     };
-    try {
-      await axios.post(`/api/users/event/${user._id}`, { _id }, config);
-      setAdded(true);
-    } catch (error) {
-      console.log(error);
+    if (profileId === "" || profileId === `${user.name}`) {
+      try {
+        await axios.post(`/api/users/event/${user._id}`, { _id }, config);
+        setAdded(true);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        await axios.post(`/api/profiles/event/${profileId}`, { _id }, config);
+        setAdded(true);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -63,6 +84,7 @@ const MeetupItem = ({
       console.log(error);
     }
   };
+
   return (
     <li className={classes.item}>
       <Card>
@@ -86,7 +108,23 @@ const MeetupItem = ({
           {added && (
             <button onClick={handleRemove}>Remove Course/ Class</button>
           )}
-          {!added && <button onClick={handleAdd}>Add Course/ Class</button>}
+          {!added && (
+            <div>
+              Add Class For
+              <select
+                className="select select-ghost w-full max-w-xs"
+                onChange={(e) => handleChange(e)}
+              >
+                <option>{user.name}</option>
+                {user.profiles.length > 0 &&
+                  user.profiles.map((profile, index) => (
+                    <option key={index}>{profile}</option>
+                  ))}
+              </select>
+              <button onClick={handleAdd}>Add</button>
+            </div>
+          )}
+
           {isCreator && (
             <Link to={`/edit-meetup/${_id}`}>
               <button className="ml-4"> Edit </button>

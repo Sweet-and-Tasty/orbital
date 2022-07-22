@@ -138,4 +138,35 @@ router.post(
   }
 );
 
+//@route POST api/event/feedback/:id
+//@desc post feedback for event
+//@access Private
+
+router.post(
+  "/feedback/:id",
+  auth,
+
+  async (req, res) => {
+    const { text } = req.body;
+    try {
+      let event = await Event.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          $push: {
+            feedback: {
+              poster: req.user.id,
+              text,
+            },
+          },
+        },
+        { new: true }
+      );
+      res.json(event);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("server error");
+    }
+  }
+);
+
 module.exports = router;

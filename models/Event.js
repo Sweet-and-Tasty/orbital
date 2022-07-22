@@ -33,6 +33,16 @@ const EventSchema = new mongoose.Schema({
       ref: "user",
     },
   ],
+  feedback: [
+    {
+      poster: {
+        type: mongoose.Schema.Types.ObjectId,
+      },
+      text: {
+        type: String,
+      },
+    },
+  ],
 });
 
 module.exports = Event = mongoose.model("event", EventSchema);
