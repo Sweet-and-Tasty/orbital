@@ -1,11 +1,15 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import FeedbackFormCard from './feedbackstuff/FeedbackFormCard';
+import { useState, useCallback } from 'react';
 import FeedbackCard from '../ui/FeedbackCard';
 import Button from './feedbackstuff/Button';
 import axios from 'axios';
+import { setAlert } from '../../actions/alert';
+// import { Navigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 
 function FeedbackForm() {
+  const { id } = useParams();
   const [text, setText] = useState('');
   //   const [rating, setRating] = useState(10);
   const [btnDisabled, setBtnDisabled] = useState(true);
@@ -27,12 +31,35 @@ function FeedbackForm() {
     setText(e.target.value);
   };
 
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await axios.post('/api/event/feedback/:id', {
-      text
-    });
+    const feedbackData = {
+      text: text
+    };
+    console.log(feedbackData);
+    try {
+      const res = axios.post(`/api/event/feedback/${id}`, feedbackData);
+      if (res.status === 200) {
+        setAlert('Feedback added successfully', 'success');
+        // return <Navigate to="/api/event/feedback/:id" />;
+        forceUpdate();
+      }
+    } catch (err) {
+      const errors = err.response.data.errors;
+      if (errors) {
+        errors.forEach((error) => {
+          setAlert(error.msg, 'danger');
+        });
+      }
+    }
   };
+
+  //   function submitFunction() {
+  //     handleSubmit();
+  //     forceUpdate();
+  //   }
 
   return (
     <FeedbackCard>
@@ -56,5 +83,10 @@ function FeedbackForm() {
     </FeedbackCard>
   );
 }
+
+FeedbackForm.propTypes = {
+  auth: PropTypes.object.isRequired,
+  setAlert: PropTypes.func.isRequired
+};
 
 export default FeedbackForm;

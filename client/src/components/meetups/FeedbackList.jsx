@@ -26,11 +26,20 @@ function FeedbackList() {
 
   return (
     <>
-      {feedbackArray.map((feedbackItem) => (
-        <ul className={classes.list}>
-          <FeedbackCard>{feedbackItem.text}</FeedbackCard>
-        </ul>
-      ))}
+      {/* if there is no feedback */}
+      {feedbackArray.length === 0 ? (
+        <div className={classes.FeedbackList}>
+          <h1>No feedback yet</h1>
+        </div>
+      ) : (
+        <div className={classes.FeedbackList}>
+          {feedbackArray.map((feedbackItem) => (
+            <ul className={classes.list}>
+              <FeedbackCard>{feedbackItem.text}</FeedbackCard>
+            </ul>
+          ))}
+        </div>
+      )}
     </>
   );
 }
