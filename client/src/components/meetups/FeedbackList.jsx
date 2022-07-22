@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import classes from './FeedbackList.module.css';
 import FeedbackCard from '../ui/FeedbackCard';
+import { Card } from '@mui/material';
 
 function FeedbackList() {
   let { id } = useParams();
@@ -28,8 +29,8 @@ function FeedbackList() {
     <>
       {/* if there is no feedback */}
       {feedbackArray.length === 0 ? (
-        <div className={classes.FeedbackList}>
-          <h1>No feedback yet</h1>
+        <div className={classes.list}>
+          <div className={classes.noFeedback}>No feedback yet</div>
         </div>
       ) : (
         <div className={classes.FeedbackList}>

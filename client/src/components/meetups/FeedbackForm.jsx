@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState, useCallback } from 'react';
 import FeedbackCard from '../ui/FeedbackCard';
 import Button from './feedbackstuff/Button';
 import axios from 'axios';
 import { setAlert } from '../../actions/alert';
-// import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 
 function FeedbackForm() {
+  const [count, setCount] = useState(0);
   const { id } = useParams();
   const [text, setText] = useState('');
   //   const [rating, setRating] = useState(10);
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [message, setMessage] = useState('');
+
+  useEffect(() => {}, [count]);
 
   const handleTextChange = (e) => {
     if (text === '') {
@@ -31,8 +34,8 @@ function FeedbackForm() {
     setText(e.target.value);
   };
 
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
+  //   const [, updateState] = useState();
+  //   const forceUpdate = useCallback(() => updateState({}), []);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const feedbackData = {
@@ -41,10 +44,11 @@ function FeedbackForm() {
     console.log(feedbackData);
     try {
       const res = axios.post(`/api/event/feedback/${id}`, feedbackData);
+      setCount(count + 1);
       if (res.status === 200) {
         setAlert('Feedback added successfully', 'success');
-        // return <Navigate to="/api/event/feedback/:id" />;
-        forceUpdate();
+        return <Navigate to="/api/event/feedback/:id" />;
+        // forceUpdate();
       }
     } catch (err) {
       const errors = err.response.data.errors;
@@ -54,12 +58,10 @@ function FeedbackForm() {
         });
       }
     }
+    setTimeout(function () {
+      window.location.reload();
+    }, 10);
   };
-
-  //   function submitFunction() {
-  //     handleSubmit();
-  //     forceUpdate();
-  //   }
 
   return (
     <FeedbackCard>
