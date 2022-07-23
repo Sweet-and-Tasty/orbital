@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-function MyMeetupItem({ _id, auth: { user } }) {
+function MyMeetupItem({ _id, name, hidden, auth: { user } }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [startDateTime, setStartDateTime] = useState(Date.now());
@@ -21,7 +21,7 @@ function MyMeetupItem({ _id, auth: { user } }) {
   useEffect(() => {
     const fetchData = async (dispatch) => {
       const res = await axios.get(`api/event/${_id}`);
-      console.log(res.data);
+
       setIsCreator(res.data.creator === user._id);
       setTitle(res.data.title);
       setDescription(res.data.description);
@@ -62,7 +62,7 @@ function MyMeetupItem({ _id, auth: { user } }) {
       console.log(error);
     }
   };
-  if (!removed) {
+  if (!removed && !hidden) {
     return (
       <li className={classes.item}>
         <Card>
@@ -70,6 +70,7 @@ function MyMeetupItem({ _id, auth: { user } }) {
             <img src={image} alt={title} />
           </div>
           <div className={classes.content}>
+            <h2>{name}</h2>
             <h3>{title}</h3>
             <h4>
               Course Start Date:{" "}
