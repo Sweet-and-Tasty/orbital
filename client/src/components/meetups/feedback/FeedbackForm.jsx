@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react';
 import { useState, useCallback } from 'react';
-import FeedbackCard from '../ui/FeedbackCard';
+import FeedbackCard from '../../ui/FeedbackCard';
 import Button from './feedbackstuff/Button';
 import axios from 'axios';
-import { setAlert } from '../../actions/alert';
+import { setAlert } from '../../../actions/alert';
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
+import FeedbackRating from './FeedbackRating';
 
 function FeedbackForm() {
   const [count, setCount] = useState(0);
   const { id } = useParams();
   const [text, setText] = useState('');
-  //   const [rating, setRating] = useState(10);
+  const [rating, setRating] = useState(10);
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [message, setMessage] = useState('');
 
@@ -39,7 +40,8 @@ function FeedbackForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const feedbackData = {
-      text: text
+      text,
+      rating
     };
     console.log(feedbackData);
     try {
@@ -58,6 +60,12 @@ function FeedbackForm() {
         });
       }
     }
+
+    setText('');
+    setRating(10);
+    setBtnDisabled(true);
+    setMessage('Feedback submitted successfully!');
+
     setTimeout(function () {
       window.location.reload();
     }, 10);
@@ -66,8 +74,8 @@ function FeedbackForm() {
   return (
     <FeedbackCard>
       <form onSubmit={handleSubmit}>
-        <h2>how would you rate your service w us?</h2>
-        {/* <RatingSelect select={(rating) => setRating(rating)} /> */}
+        <h2>how would you rate this class?</h2>
+        <FeedbackRating select={(rating) => setRating(rating)} />
         <div className="input-group">
           <input
             onChange={handleTextChange}

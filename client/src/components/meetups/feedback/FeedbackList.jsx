@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import classes from './FeedbackList.module.css';
-import FeedbackCard from '../ui/FeedbackCard';
-import { Card } from '@mui/material';
+import FeedbackCard from '../../ui/FeedbackCard';
 
 function FeedbackList() {
   let { id } = useParams();
