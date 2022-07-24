@@ -11,6 +11,8 @@ const MyMeetupsPage = ({ auth: { user } }) => {
   const [myLoadedProfiles, setMyLoadedProfiles] = useState([]);
 
   useEffect(() => {
+    setMyLoadedMeetups([]);
+    setMyLoadedProfiles([]);
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
@@ -27,7 +29,7 @@ const MyMeetupsPage = ({ auth: { user } }) => {
       res.data.events.map((event) => {
         setMyLoadedMeetups((prev) => [
           ...prev,
-          { event, hidden: false, name: res.data.name },
+          { event, hidden: false, name: res.data.name, Id: res.data._id },
         ]);
       });
 
@@ -40,7 +42,7 @@ const MyMeetupsPage = ({ auth: { user } }) => {
         res.data.events.map((event) => {
           setMyLoadedMeetups((prev) => [
             ...prev,
-            { event, hidden: false, name: res.data.name },
+            { event, hidden: false, name: res.data.name, Id: res.data._id },
           ]);
         });
 

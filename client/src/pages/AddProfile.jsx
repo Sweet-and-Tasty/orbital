@@ -3,14 +3,17 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loadUser } from "../actions/auth";
 import axios from "axios";
-import { FaUserPlus } from "react-icons/fa";
+import { FaUserPlus, FaWindows } from "react-icons/fa";
+import DisplayProfile from "./DisplayProfile";
 
 function AddProfile({ auth: { user } }) {
   const [formData, setFromData] = useState({
     name: "",
+    avatar: "",
   });
+  const [profilesId, setProfilesId] = useState([]);
 
-  const { name } = formData;
+  const { name, avatar } = formData;
 
   const onChange = (e) =>
     setFromData({ ...formData, [e.target.name]: e.target.value });
@@ -30,15 +33,24 @@ function AddProfile({ auth: { user } }) {
       config
     );
     console.log(formData);
-    console.log(res.data);
+    window.location.reload(true);
   };
 
   useEffect(() => {
+    setProfilesId([]);
     loadUser();
+    user.profiles.map((profile) => {
+      setProfilesId((prev) => [...prev, { Id: profile }]);
+    });
   }, []);
 
   return (
     <>
+      <div className="flex justify-center mt-10">
+        {profilesId.map((profile, index) => (
+          <DisplayProfile _id={profile.Id} key={index} />
+        ))}
+      </div>
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
@@ -66,8 +78,25 @@ function AddProfile({ auth: { user } }) {
                   value={name}
                   onChange={(e) => onChange(e)}
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Name"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="name" className="sr-only">
+                  Avatar Link
+                </label>
+                <input
+                  id="avatar"
+                  name="avatar"
+                  type="avatar"
+                  autoComplete="avatar"
+                  value={avatar}
+                  onChange={(e) => onChange(e)}
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Avatar Link"
                 />
               </div>
             </div>

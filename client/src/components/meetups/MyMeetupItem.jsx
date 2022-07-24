@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-function MyMeetupItem({ _id, name, hidden, auth: { user } }) {
+function MyMeetupItem({ _id, name, hidden, userId, auth: { user } }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [startDateTime, setStartDateTime] = useState(Date.now());
@@ -55,12 +55,14 @@ function MyMeetupItem({ _id, name, hidden, auth: { user } }) {
         "x-auth-token": localStorage.getItem("token"),
       },
     };
-    try {
-      await axios.post(`/api/users/remove-event/${user._id}`, { _id }, config);
-      setRemoved(true);
-    } catch (error) {
-      console.log(error);
-    }
+    userId === user._id
+      ? await axios.post(`/api/users/remove-event/${user._id}`, { _id }, config)
+      : await axios.post(
+          `/api/profiles/remove-event/${userId}`,
+          { _id },
+          config
+        );
+    setRemoved(true);
   };
   if (!removed && !hidden) {
     return (

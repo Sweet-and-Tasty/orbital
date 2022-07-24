@@ -21,6 +21,7 @@ function MyMeetupList({ meetups }) {
           _id={meetup.event}
           name={meetup.name}
           hidden={meetup.hidden}
+          userId={meetup.Id}
         />
       ))}
     </ul>

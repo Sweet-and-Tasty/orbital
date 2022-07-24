@@ -87,7 +87,7 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           to="/add-profile"
           className="btn btn-ghost btn-sm rounded-btn flex-1"
         >
-          <FaUserFriends className="inline pr-2 text-3xl" /> Add Profile
+          <FaUserFriends className="inline pr-2 text-3xl" /> Profiles
         </Link>
       </div>
     </div>
