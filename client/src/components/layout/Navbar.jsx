@@ -77,13 +77,6 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         </Link>
 
         <Link
-          to="/feedback"
-          className="btn btn-ghost btn-sm rounded-btn flex-1"
-        >
-          <FaCalendarAlt className="inline pr-2 text-3xl" /> Feedback
-        </Link>
-
-        <Link
           to="/add-profile"
           className="btn btn-ghost btn-sm rounded-btn flex-1"
         >

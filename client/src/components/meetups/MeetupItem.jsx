@@ -149,17 +149,19 @@ const MeetupItem = ({
                   </option>
                 ))}
             </select>
-            <button onClick={handleAdd}>Add</button>
+            <button className="mt-2" onClick={handleAdd}>
+              Add
+            </button>
           </div>
 
           {isCreator && (
             <Link to={`/edit-meetup/${_id}`}>
-              <button className="ml-4"> Edit </button>
+              <button className="ml-4 mt-2"> Edit </button>
             </Link>
           )}
           {/* make a feedback button */}
           <Link to={`/feedback/${_id}`}>
-            <button className="ml-4"> Feedback </button>
+            <button className="ml-4 mt-2"> Feedback </button>
           </Link>
         </div>
       </Card>

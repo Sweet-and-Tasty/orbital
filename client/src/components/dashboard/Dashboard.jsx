@@ -8,11 +8,13 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import momentPlugin from "@fullcalendar/moment";
 
 const Dashboard = (props) => {
   const [events, setEvents] = useState();
+  const [view, setView] = useState(false);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -42,13 +44,10 @@ const Dashboard = (props) => {
   }
 
   const handleEventClick = (clickInfo) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete the event '${clickInfo.event.title}'`
-      )
-    ) {
-      clickInfo.event.remove();
-    }
+    console.log(clickInfo);
+    const eventId = clickInfo.event.id;
+    console.log(eventId);
+    setView(window.confirm("view event in my classes?"));
   };
 
   const handleDateSelect = (selectInfo) => {
@@ -57,6 +56,10 @@ const Dashboard = (props) => {
 
     calendarApi.unselect(); // clear date selection
   };
+
+  if (view) {
+    return <Navigate to={`/my-meetups`} />;
+  }
   return (
     <div className="container mx-auto my-auto ">
       <h1 className="page-title">Welcome to dashboard</h1>
