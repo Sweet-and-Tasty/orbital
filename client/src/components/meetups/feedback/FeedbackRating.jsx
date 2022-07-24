@@ -1,6 +1,6 @@
 import React from 'react';
-import { useCallback, useState, useEffect } from 'react';
-import classes from './FeedbackRating.module.css';
+import { useState } from 'react';
+import classes from './Feedback.module.css';
 
 function FeedbackRating({ select }) {
   const [selected, setSelected] = useState(10);

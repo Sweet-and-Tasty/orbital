@@ -1,3 +1,16 @@
+.list {
+  list-style: none;
+  margin: 5px;
+  padding: 5px;
+}
+
+.noFeedback {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #999;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 * {
@@ -41,10 +54,10 @@ header {
   position: relative;
 }
 
-/* .card.reverse {
+.card.reverse {
   background-color: rgba(0, 0, 0, 0.4);
   color: #fff;
-} */
+}
 
 .card h2 {
   font-size: 22px;
@@ -60,7 +73,7 @@ header {
 }
 
 .rating li,
-.num-display {
+.numDisplay {
   position: relative;
   background: #0336379a;
   width: 50px;
@@ -86,7 +99,7 @@ header {
 }
 
 .rating li:hover,
-.num-display {
+.numDisplay {
   background: #223141;
   color: #fff;
 }
@@ -181,8 +194,16 @@ input:focus {
 
 .message {
   padding-top: 10px;
+  padding-bottom: 10px;
   text-align: center;
-  color: rebeccapurple;
+  color: rgb(0, 0, 0);
+}
+
+.centerText {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  color: rgb(0, 0, 0);
 }
 
 /* FIX: Remove position: absolute to keep about icon at the bottom of the

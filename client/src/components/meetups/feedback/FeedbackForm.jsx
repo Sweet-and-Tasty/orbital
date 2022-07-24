@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { useState, useCallback } from 'react';
-import FeedbackCard from '../../ui/FeedbackCard';
+import { useState } from 'react';
 import Button from './feedbackstuff/Button';
 import axios from 'axios';
 import { setAlert } from '../../../actions/alert';
@@ -8,6 +7,9 @@ import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import FeedbackRating from './FeedbackRating';
+import FeedbackFormCard from './feedbackstuff/FeedbackFormCard';
+import FeedbackCard from '../../ui/FeedbackCard';
+import classes from './Feedback.module.css';
 
 function FeedbackForm() {
   const [count, setCount] = useState(0);
@@ -74,7 +76,7 @@ function FeedbackForm() {
   return (
     <FeedbackCard>
       <form onSubmit={handleSubmit}>
-        <h2>how would you rate this class?</h2>
+        <h1 className={classes.message}>how would you rate this class?</h1>
         <FeedbackRating select={(rating) => setRating(rating)} />
         <div className="input-group">
           <input

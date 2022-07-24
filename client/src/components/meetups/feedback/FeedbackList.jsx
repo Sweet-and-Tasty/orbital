@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import classes from './FeedbackList.module.css';
+import classes from './Feedback.module.css';
 import FeedbackCard from '../../ui/FeedbackCard';
+// import FaTimes from 'react-icons/fa/FaTimes';
+// import FaEdit from 'react-icons/fa/FaEdit';
 
 function FeedbackList() {
   let { id } = useParams();
@@ -35,7 +37,19 @@ function FeedbackList() {
         <div className={classes.FeedbackList}>
           {feedbackArray.map((feedbackItem) => (
             <ul className={classes.list}>
-              <FeedbackCard>{feedbackItem.text}</FeedbackCard>
+              <FeedbackCard>
+                <div className={classes.numDisplay}>{feedbackItem.rating}</div>
+                {/* <button
+                  onClick={() => deleteFeedback(item.id)}
+                  className="close"
+                >
+                  <FaTimes color="purple" />
+                </button>
+                <button onClick={() => editFeedback(item)} className="edit">
+                  <FaEdit color="purple" />
+                </button> */}
+                <div className={classes.message}>{feedbackItem.text}</div>
+              </FeedbackCard>
             </ul>
           ))}
         </div>
