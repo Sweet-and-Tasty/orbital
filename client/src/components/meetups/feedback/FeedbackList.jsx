@@ -5,7 +5,7 @@ import classes from './Feedback.module.css';
 import FeedbackCard from '../../ui/FeedbackCard';
 // import FaTimes from 'react-icons/fa/FaTimes';
 // import FaEdit from 'react-icons/fa/FaEdit';
-import { FaBeer } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 
 function FeedbackList() {
   let { id } = useParams();
@@ -52,7 +52,7 @@ function FeedbackList() {
                   onClick={() => deleteFeedback(feedbackItem._id)}
                   className="close"
                 >
-                  <FaBeer color="purple" />
+                  <FaTimes color="purple" />
                 </button>
                 {/* <button onClick={() => editFeedback(item)} className="edit">
                   <FaEdit color="purple" />
