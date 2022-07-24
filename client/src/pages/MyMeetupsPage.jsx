@@ -141,7 +141,7 @@ const MyMeetupsPage = ({ auth: { user } }) => {
               <span className="label-text pr-2">{profile.name}</span>
               <input
                 type="checkbox"
-                className="checkbox checkbox-secondary checked:bg-white-100"
+                className="checkbox checkbox-secondary checked:bg-white-100 flex-initial"
                 onClick={(e) => handleClickProfile(e, profile._id)}
                 defaultChecked={true}
               />
