@@ -49,10 +49,10 @@ function FeedbackList() {
               <FeedbackCard>
                 <div className={classes.numDisplay}>{feedbackItem.rating}</div>
                 <button
+                  className={classes.close}
                   onClick={() => deleteFeedback(feedbackItem._id)}
-                  className="close"
                 >
-                  <FaTimes color="purple" />
+                  <FaTimes color="#bb13bb" />
                 </button>
                 {/* <button onClick={() => editFeedback(item)} className="edit">
                   <FaEdit color="purple" />

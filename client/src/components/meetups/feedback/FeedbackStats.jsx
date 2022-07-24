@@ -39,10 +39,21 @@ function FeedbackStats() {
   averageRating = averageRating.toFixed(1).replace(/[.,]0$/, '');
 
   return (
-    <div className={classes.feedbackStats}>
-      <h4>{feedbackArray.length} Reviews</h4>
-      <h4>Average Rating: {isNaN(averageRating) ? 0 : averageRating}</h4>
-    </div>
+    <>
+      <div class="stats shadow grid place-items-center">
+        <div class="stat place-items-center">
+          <div class="stat-title ">Reviews</div>
+          <div class="stat-value">{feedbackArray.length}</div>
+        </div>
+
+        <div class="stat place-items-center">
+          <div class="stat-title ">Average Rating</div>
+          <div class="stat-value text-secondary">
+            {isNaN(averageRating) ? 0 : averageRating}
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 

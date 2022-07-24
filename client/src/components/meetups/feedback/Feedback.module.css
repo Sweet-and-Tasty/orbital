@@ -100,7 +100,7 @@ header {
 
 .rating li:hover,
 .numDisplay {
-  background: #223141;
+  background: #045e77;
   color: #fff;
 }
 
@@ -123,7 +123,7 @@ header {
 
 input {
   flex-grow: 2;
-  /* border: none; */
+  border: none;
   font-size: 16px;
 }
 
@@ -144,7 +144,12 @@ input:focus {
   left: -10px;
 }
 
-.close,
+.close {
+  color: rgb(187, 19, 187);
+  position: relative;
+  left: 1621px;
+  top: -40px;
+}
 .edit {
   position: absolute;
   top: 10px;
@@ -162,7 +167,7 @@ input:focus {
   color: #fff;
   border: 0;
   border-radius: 8px;
-  color: #fff;
+  color: rgb(92, 51, 51);
   width: 100px;
   height: 40px;
   cursor: pointer;
@@ -193,8 +198,8 @@ input:focus {
 }
 
 .message {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: -264px;
+  padding-bottom: -129px;
   text-align: center;
   color: rgb(0, 0, 0);
 }
