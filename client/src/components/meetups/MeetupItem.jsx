@@ -1,13 +1,13 @@
-import Card from "../ui/Card";
-import classes from "./MeetupItem.module.css";
-import moment from "moment";
-import { useState, useEffect } from "react";
-import { loadUser } from "../../actions/auth";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { setAlert } from "../../actions/alert";
+import Card from '../ui/Card';
+import classes from './MeetupItem.module.css';
+import moment from 'moment';
+import { useState, useEffect } from 'react';
+import { loadUser } from '../../actions/auth';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { setAlert } from '../../actions/alert';
 
 const MeetupItem = ({
   image,
@@ -19,12 +19,16 @@ const MeetupItem = ({
   description,
   creator,
   auth: { user },
-  setAlert,
+  setAlert
 }) => {
   const [isCreator, setIsCreator] = useState(false);
+<<<<<<< HEAD
   const [profiles, setProfiles] = useState([]);
   const [profileId, setProfileId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+=======
+  const [profileId, setProfileId] = useState('');
+>>>>>>> feedback-deen
   let profilesId = [];
 
   useEffect(() => {
@@ -73,16 +77,20 @@ const MeetupItem = ({
     console.log(profileId);
     const config = {
       headers: {
-        "Content-Type": "application/json",
-        "x-auth-token": localStorage.getItem("token"),
-      },
+        'Content-Type': 'application/json',
+        'x-auth-token': localStorage.getItem('token')
+      }
     };
+<<<<<<< HEAD
     if (profileId === "" || profileId === `${user._id}`) {
+=======
+    if (profileId === '' || profileId === `${user.name}`) {
+>>>>>>> feedback-deen
       try {
         await axios.post(`/api/users/event/${user._id}`, { _id }, config);
         setAlert("Event added to your profile", "success");
       } catch (error) {
-        setAlert(error.response.data.msg, "danger");
+        setAlert(error.response.data.msg, 'danger');
         console.log(error.response.data.msg);
       }
     } else {
@@ -90,7 +98,7 @@ const MeetupItem = ({
         await axios.post(`/api/profiles/event/${profileId}`, { _id }, config);
         setAlert("Event added to your profile", "success");
       } catch (error) {
-        setAlert(error.response.data.msg, "danger");
+        setAlert(error.response.data.msg, 'danger');
         console.log(error.response.data.msg);
       }
     }
@@ -121,12 +129,12 @@ const MeetupItem = ({
         <div className={classes.content}>
           <h3>{title}</h3>
           <h4>
-            Course Start Date:{" "}
-            {moment(startDateTime).format("MMMM Do YYYY, h:mm a")}
+            Course Start Date:{' '}
+            {moment(startDateTime).format('MMMM Do YYYY, h:mm a')}
           </h4>
           <h4>
-            Course End Date:{" "}
-            {moment(endDateTime).format("MMMM Do YYYY, h:mm a")}
+            Course End Date:{' '}
+            {moment(endDateTime).format('MMMM Do YYYY, h:mm a')}
           </h4>
           <address>{address}</address>
           <p>{description}</p>
@@ -169,11 +177,11 @@ const MeetupItem = ({
 
 MeetupItem.propTypes = {
   auth: PropTypes.object.isRequired,
-  setAlert: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { setAlert })(MeetupItem);

@@ -1,37 +1,37 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require("express-validator");
-const { accepts } = require("express/lib/request");
+const { check, validationResult } = require('express-validator');
+const { accepts } = require('express/lib/request');
 const {
   isValidDate,
   isValidISODateString,
   isValidTime,
-  isValidYearMonth,
-} = require("iso-datestring-validator");
+  isValidYearMonth
+} = require('iso-datestring-validator');
 //const auth = require("../../middleware/auth");
-const Event = require("../../models/Event");
-const auth = require("../../middleware/auth");
+const Event = require('../../models/Event');
+const auth = require('../../middleware/auth');
 
 //@route POST api/event
 //@desc create a event
 //@access Private
 
 router.post(
-  "/",
+  '/',
   auth,
   [
-    check("startDateTime", "start date and time in ISO format required").custom(
+    check('startDateTime', 'start date and time in ISO format required').custom(
       (value) => {
         return isValidISODateString(value);
       }
     ),
-    check("endDateTime", "end date and time in ISO format required").custom(
+    check('endDateTime', 'end date and time in ISO format required').custom(
       (value) => {
         return isValidISODateString(value);
       }
     ),
-    check("title", "enter a title for event").not().isEmpty(),
-    check("address", "enter an address for event").not().isEmpty(),
+    check('title', 'enter a title for event').not().isEmpty(),
+    check('address', 'enter an address for event').not().isEmpty()
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -49,13 +49,13 @@ router.post(
         address,
         description,
         image,
-        creator: req.user.id,
+        creator: req.user.id
       });
       const event = await newEvent.save();
       res.json(event);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("server error");
+      res.status(500).send('server error');
     }
   }
 );
@@ -63,26 +63,26 @@ router.post(
 //@route GET api/event
 //@desc get all events
 //@access Public
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const events = await Event.find();
     res.json(events);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("server error");
+    res.status(500).send('server error');
   }
 });
 
 //@route GET api/event/:id
 //@desc get event by Id
 //@access Public
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const events = await Event.findById(req.params.id);
     res.json(events);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("server error");
+    res.status(500).send('server error');
   }
 });
 
@@ -91,21 +91,21 @@ router.get("/:id", async (req, res) => {
 //@access Private
 
 router.post(
-  "/:id",
+  '/:id',
   auth,
   [
-    check("startDateTime", "start date and time in ISO format required").custom(
+    check('startDateTime', 'start date and time in ISO format required').custom(
       (value) => {
         return isValidISODateString(value);
       }
     ),
-    check("endDateTime", "end date and time in ISO format required").custom(
+    check('endDateTime', 'end date and time in ISO format required').custom(
       (value) => {
         return isValidISODateString(value);
       }
     ),
-    check("title", "enter a title for event").not().isEmpty(),
-    check("address", "enter an address for event").not().isEmpty(),
+    check('title', 'enter a title for event').not().isEmpty(),
+    check('address', 'enter an address for event').not().isEmpty()
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -125,25 +125,30 @@ router.post(
             title,
             address,
             description,
-            image,
-          },
+            image
+          }
         },
         { new: true }
       );
       res.json(event);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("server error");
+      res.status(500).send('server error');
     }
   }
 );
 
-//@route POST api/event/feedback/:id
+//@route POST api/event/:id
 //@desc post feedback for event
 //@access Private
+<<<<<<< HEAD
 
 router.post("/feedback/:id", auth, async (req, res) => {
   const { text } = req.body;
+=======
+router.post('/feedback/:id', auth, async (req, res) => {
+  const { text, rating } = req.body;
+>>>>>>> feedback-deen
   try {
     let event = await Event.findOneAndUpdate(
       { _id: req.params.id },
@@ -152,16 +157,51 @@ router.post("/feedback/:id", auth, async (req, res) => {
           feedback: {
             poster: req.user.id,
             text,
+<<<<<<< HEAD
           },
         },
+=======
+            rating
+          }
+        }
+>>>>>>> feedback-deen
       },
       { new: true }
     );
     res.json(event);
   } catch (err) {
     console.error(err.message);
+<<<<<<< HEAD
     res.status(500).send("server error");
   }
 });
+=======
+    res.status(500).send('server error');
+  }
+});
+
+// @route DELETE api/event/:id/:id
+// @desc delete a feedback
+// @access Private
+router.delete('/feedback/:id/:feedbackId', auth, async (req, res) => {
+  try {
+    let event = await Event.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $pull: {
+          feedback: {
+            _id: req.params.feedbackId
+          }
+        }
+      },
+      { new: true }
+    );
+    res.json(event);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('server error');
+  }
+});
+>>>>>>> feedback-deen
 
 module.exports = router;

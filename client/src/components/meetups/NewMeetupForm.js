@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import axios from 'axios';
 import { setAlert } from '../../actions/alert';
-import Card from '../ui/Card';
+import AddNewFormCard from '../ui/AddNewFormCard';
 import classes from './NewMeetupForm.module.css';
 import { Navigate } from 'react-router-dom';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -18,7 +18,6 @@ function NewMeetupForm(props) {
   const descriptionInputRef = useRef();
 
   const submitHandler = async () => {
-    // event.preventDefault();
     const enteredTitle = titleInputRef.current.value;
     const enteredImage = imageInputRef.current.value;
     const enteredAddress = addressInputRef.current.value;
@@ -58,7 +57,7 @@ function NewMeetupForm(props) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
-      <Card>
+      <AddNewFormCard>
         <form className={classes.form} onSubmit={submitHandler}>
           <div className={(classes.control, 'mb-5')}>
             <DateTimePicker
@@ -102,7 +101,7 @@ function NewMeetupForm(props) {
             <button>Add Course/ Class</button>
           </div>
         </form>
-      </Card>
+      </AddNewFormCard>
     </LocalizationProvider>
   );
 }

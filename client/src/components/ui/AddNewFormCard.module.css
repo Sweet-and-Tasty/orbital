@@ -7,7 +7,7 @@
   /* height: fit-content; */
   max-height: 50%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* grid-template-columns: repeat(3, 1fr); */
   gap: 20px;
   font-family: sans-serif;
 }
