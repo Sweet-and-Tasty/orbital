@@ -147,10 +147,8 @@ input:focus {
 .close {
   color: rgb(187, 19, 187);
   position: relative;
-
-  left: 1381px;
+  left: 1331px;
   top: -38px;
-
 }
 .edit {
   position: absolute;
