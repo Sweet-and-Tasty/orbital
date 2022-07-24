@@ -45,7 +45,7 @@ function FeedbackForm() {
       text,
       rating
     };
-    console.log(feedbackData);
+    // console.log(feedbackData);
     try {
       const res = axios.post(`/api/event/feedback/${id}`, feedbackData);
       setCount(count + 1);
