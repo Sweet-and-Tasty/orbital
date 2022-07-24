@@ -167,7 +167,7 @@ router.post('/feedback/:id', auth, async (req, res) => {
 // @route DELETE api/event/:id/:id
 // @desc delete a feedback
 // @access Private
-router.delete('feedback/:id/:feedbackId', auth, async (req, res) => {
+router.delete('/feedback/:id/:feedbackId', auth, async (req, res) => {
   try {
     let event = await Event.findOneAndUpdate(
       { _id: req.params.id },
