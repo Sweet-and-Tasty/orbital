@@ -9,59 +9,108 @@ const MyMeetupsPage = ({ auth: { user } }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [myLoadedMeetups, setMyLoadedMeetups] = useState([]);
   const [myLoadedProfiles, setMyLoadedProfiles] = useState([]);
-  let profilesChecked = [];
-  const [checked, setChecked] = useState([]);
-  let eventsId = [];
-  let profiles = [];
 
   useEffect(() => {
+    setMyLoadedMeetups([]);
+    setMyLoadedProfiles([]);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    let profiles = [];
     const config = {
       headers: {
         "Content-Type": "application/json",
         "x-auth-token": localStorage.getItem("token"),
       },
     };
+    async function fetchProfile(profile) {
+      const res = await axios.get(`/api/profiles/${profile}`, config);
+      profiles.push(res.data);
+      res.data.events.map((event) => {
+        setMyLoadedMeetups((prev) => [
+          ...prev,
+          { event, hidden: false, name: res.data.name, Id: res.data._id },
+        ]);
+      });
+
+      setMyLoadedProfiles((prev) => [...prev, res.data]);
+    }
+
     const fetchData = async (dispatch) => {
       const res = await axios.get(`/api/users/find/${user._id}`);
       if (res.data.events.length > 0) {
         res.data.events.map((event) => {
-          eventsId.push({ event });
+          setMyLoadedMeetups((prev) => [
+            ...prev,
+            { event, hidden: false, name: res.data.name, Id: res.data._id },
+          ]);
         });
 
         //const eventsId = [Object.assign({}, res.data.events)];
-        setMyLoadedMeetups(eventsId);
       } else {
         setMyLoadedMeetups([]);
       }
 
       if (res.data.profiles.length > 0) {
         res.data.profiles.map((profile) => {
-          const response = axios.get(`/api/profiles/${profile}`, config);
-          profiles.push(response.data);
+          fetchProfile(profile);
         });
-        setMyLoadedProfiles(profiles);
+      } else {
+        setMyLoadedProfiles([]);
       }
-
-      setIsLoading(false);
     };
     loadUser();
     fetchData();
-    console.log(myLoadedMeetups);
-    console.log(myLoadedProfiles);
   }, []);
 
   const handleClick = async (e, profileId) => {
+    let tempArray = [];
+    console.log(profileId);
+    const res = await axios.get(`/api/users/find/${profileId}`);
     if (e.target.checked) {
-      const res = await axios.get(`/api/users/find/${profileId}`);
-      if (res.data.events.length > 0) {
-        console.log(res.data.events);
-        res.data.events.map((event) => {
-          eventsId.push({ event });
-        });
-
-        setMyLoadedMeetups(eventsId);
-      }
+      myLoadedMeetups.map((meetup) => {
+        console.log(meetup);
+        if (meetup.name === res.data.name) {
+          meetup.hidden = false;
+        }
+        tempArray.push(meetup);
+      });
+    } else {
+      myLoadedMeetups.map((meetup) => {
+        console.log(meetup);
+        if (meetup.name === res.data.name) {
+          meetup.hidden = true;
+        }
+        tempArray.push(meetup);
+      });
     }
+    console.log(tempArray);
+    setMyLoadedMeetups(tempArray);
+  };
+
+  const handleClickProfile = async (e, profileId) => {
+    let tempArray = [];
+    console.log(profileId);
+    const res = await axios.get(`/api/profiles/${profileId}`);
+    if (e.target.checked) {
+      myLoadedMeetups.map((meetup) => {
+        console.log(meetup);
+        if (meetup.name === res.data.name) {
+          meetup.hidden = false;
+        }
+        tempArray.push(meetup);
+      });
+    } else {
+      myLoadedMeetups.map((meetup) => {
+        console.log(meetup);
+        if (meetup.name === res.data.name) {
+          meetup.hidden = true;
+        }
+        tempArray.push(meetup);
+      });
+    }
+    console.log(tempArray);
+    setMyLoadedMeetups(tempArray);
   };
 
   if (isLoading) {
@@ -81,17 +130,20 @@ const MyMeetupsPage = ({ auth: { user } }) => {
             type="checkbox"
             className="checkbox checkbox-secondary checked:bg-white-100"
             onClick={(e) => handleClick(e, user._id)}
+            defaultChecked={true}
           />
         </label>
-
+        {console.log(myLoadedMeetups)}
+        {console.log(myLoadedProfiles)}
         {myLoadedProfiles.length > 0 &&
           myLoadedProfiles.map((profile, index) => (
             <label className="label" key={index}>
               <span className="label-text pr-2">{profile.name}</span>
               <input
                 type="checkbox"
-                className="checkbox checkbox-secondary checked:bg-white-100"
-                onClick={(e) => handleClick(e, profile._id)}
+                className="checkbox checkbox-secondary checked:bg-white-100 flex-initial"
+                onClick={(e) => handleClickProfile(e, profile._id)}
+                defaultChecked={true}
               />
             </label>
           ))}

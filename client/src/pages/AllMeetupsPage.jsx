@@ -8,10 +8,13 @@ const AllMeetupsPage = () => {
   const [loadedMeetups, setLoadedMeetups] = useState([]);
 
   useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
     const fetchData = async (dispatch) => {
       const res = await axios.get("api/event");
       setLoadedMeetups(res.data);
-      setIsLoading(false);
+
       await console.log(loadedMeetups);
       console.log(res.data);
     };

@@ -9,7 +9,6 @@ const PrivateRoute = ({
 }) => {
   if (loading) return <h2>loading....</h2>;
   if (isAuthenticated) return <Component />;
-
   return <Navigate to="/login" />;
 };
 

@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import classes from './Feedback.module.css';
-import FeedbackCard from '../../ui/FeedbackCard';
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import classes from "./Feedback.module.css";
+import FeedbackCard from "../../ui/FeedbackCard";
 // import FaTimes from 'react-icons/fa/FaTimes';
 // import FaEdit from 'react-icons/fa/FaEdit';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes } from "react-icons/fa";
 
 function FeedbackList() {
   let { id } = useParams();
@@ -29,7 +29,7 @@ function FeedbackList() {
 
   // deleteFeedback only if youre the creator of the feedback
   const deleteFeedback = async (feedbackId) => {
-    if (window.confirm('Are you sure you want to delete this feedback?')) {
+    if (window.confirm("Are you sure you want to delete this feedback?")) {
       await axios.delete(`/api/event/feedback/${id}/${feedbackId}`);
       window.location.reload();
     }
@@ -44,8 +44,8 @@ function FeedbackList() {
         </div>
       ) : (
         <div className={classes.FeedbackList}>
-          {feedbackArray.map((feedbackItem) => (
-            <ul className={classes.list}>
+          {feedbackArray.map((feedbackItem, index) => (
+            <ul className={classes.list} key={index}>
               <FeedbackCard>
                 <div className={classes.numDisplay}>{feedbackItem.rating}</div>
                 <button

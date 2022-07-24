@@ -261,4 +261,31 @@ router.post("/profiles/:id", auth, async (req, res) => {
   }
 });
 
+//@route POST api/users/profiles/:id
+//@desc remove profile Id from user
+//@access Private
+
+router.post("/remove-profile/:id", auth, async (req, res) => {
+  const { _id } = req.body;
+  console.log(req.body._id);
+
+  try {
+    //see if user exist
+    let user = await User.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $pull: {
+          profiles: _id,
+        },
+      },
+      { new: true }
+    );
+
+    return res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).json({ msg: "server error" });
+  }
+});
+
 module.exports = router;

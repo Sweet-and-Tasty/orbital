@@ -22,16 +22,39 @@ const MeetupItem = ({
   setAlert
 }) => {
   const [isCreator, setIsCreator] = useState(false);
+  const [profiles, setProfiles] = useState([]);
   const [profileId, setProfileId] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   let profilesId = [];
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get(`/api/users/find/${user._id}`);
 
+  useEffect(() => {
+    setProfiles([]);
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': localStorage.getItem('token')
+      }
+    };
+    async function fetchProfile(profile) {
+      const res = await axios.get(`/api/profiles/${profile}`, config);
+      setProfiles((prev) => [
+        ...prev,
+        { name: res.data.name, Id: res.data._id }
+      ]);
+    }
+
+    const fetchData = async (dispatch) => {
+      const res = await axios.get(`/api/users/find/${user._id}`);
+      setProfiles((prev) => [
+        ...prev,
+        { name: res.data.name, Id: res.data._id }
+      ]);
       if (res.data.profiles.length > 0) {
         res.data.profiles.map((profile) => {
-          profilesId.push({ profile });
+          fetchProfile(profile);
         });
+      } else {
+        setProfiles([]);
       }
     };
 
@@ -41,21 +64,23 @@ const MeetupItem = ({
     setIsCreator(creator === user._id);
   }, []);
 
-  const handleChange = (e) => {
+  const handleClick = (e) => {
+    e.preventDefault();
     setProfileId(e.target.value);
-    console.log(profileId);
   };
 
   const handleAdd = async () => {
+    console.log(profileId);
     const config = {
       headers: {
         'Content-Type': 'application/json',
         'x-auth-token': localStorage.getItem('token')
       }
     };
-    if (profileId === '' || profileId === `${user.name}`) {
+    if (profileId === '' || profileId === `${user._id}`) {
       try {
         await axios.post(`/api/users/event/${user._id}`, { _id }, config);
+        setAlert('Event added to your profile', 'success');
       } catch (error) {
         setAlert(error.response.data.msg, 'danger');
         console.log(error.response.data.msg);
@@ -63,6 +88,7 @@ const MeetupItem = ({
     } else {
       try {
         await axios.post(`/api/profiles/event/${profileId}`, { _id }, config);
+        setAlert('Event added to your profile', 'success');
       } catch (error) {
         setAlert(error.response.data.msg, 'danger');
         console.log(error.response.data.msg);
@@ -88,6 +114,7 @@ const MeetupItem = ({
   return (
     <li className={classes.item}>
       <Card>
+        {console.log(profiles)}
         <div className={classes.image}>
           <img src={image} alt={title} />
         </div>
@@ -113,12 +140,13 @@ const MeetupItem = ({
             Add Class For
             <select
               className="select select-ghost w-full max-w-xs"
-              onChange={(e) => handleChange(e)}
+              onClick={(e) => handleClick(e)}
             >
-              <option>{user.name}</option>
-              {user.profiles.length > 0 &&
-                user.profiles.map((profile, index) => (
-                  <option key={index}>{profile}</option>
+              {profiles.length > 0 &&
+                profiles.map((profile, index) => (
+                  <option key={index} value={profile.Id}>
+                    {profile.name}
+                  </option>
                 ))}
             </select>
             <button onClick={handleAdd}>Add</button>
