@@ -141,36 +141,50 @@ router.post(
 //@route POST api/event/:id
 //@desc post feedback for event
 //@access Private
-router.post(
-  '/:id/',
-  auth,
-
-  async (req, res) => {
-    const { text, rating } = req.body;
-    try {
-      let event = await Event.findOneAndUpdate(
-        { _id: req.params.id },
-        {
-          $push: {
-            feedback: {
-              poster: req.user.id,
-              text,
-              rating
-            }
+router.post('/feedback/:id', auth, async (req, res) => {
+  const { text, rating } = req.body;
+  try {
+    let event = await Event.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $push: {
+          feedback: {
+            poster: req.user.id,
+            text,
+            rating
           }
-        },
-        { new: true }
-      );
-      res.json(event);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('server error');
-    }
+        }
+      },
+      { new: true }
+    );
+    res.json(event);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('server error');
   }
-);
+});
 
-// @route PUT api/event/:id/id
-// @desc update a feedback
+// @route DELETE api/event/:id/:id
+// @desc delete a feedback
 // @access Private
+router.delete('feedback/:id/:id', auth, async (req, res) => {
+  try {
+    let event = await Event.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $pull: {
+          feedback: {
+            _id: req.params.feedbackId
+          }
+        }
+      },
+      { new: true }
+    );
+    res.json(event);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('server error');
+  }
+});
 
 module.exports = router;
