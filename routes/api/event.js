@@ -141,14 +141,9 @@ router.post(
 //@route POST api/event/:id
 //@desc post feedback for event
 //@access Private
-<<<<<<< HEAD
 
 router.post("/feedback/:id", auth, async (req, res) => {
   const { text } = req.body;
-=======
-router.post('/feedback/:id', auth, async (req, res) => {
-  const { text, rating } = req.body;
->>>>>>> feedback-deen
   try {
     let event = await Event.findOneAndUpdate(
       { _id: req.params.id },
@@ -157,51 +152,16 @@ router.post('/feedback/:id', auth, async (req, res) => {
           feedback: {
             poster: req.user.id,
             text,
-<<<<<<< HEAD
           },
         },
-=======
-            rating
-          }
-        }
->>>>>>> feedback-deen
       },
       { new: true }
     );
     res.json(event);
   } catch (err) {
     console.error(err.message);
-<<<<<<< HEAD
     res.status(500).send("server error");
   }
 });
-=======
-    res.status(500).send('server error');
-  }
-});
-
-// @route DELETE api/event/:id/:id
-// @desc delete a feedback
-// @access Private
-router.delete('/feedback/:id/:feedbackId', auth, async (req, res) => {
-  try {
-    let event = await Event.findOneAndUpdate(
-      { _id: req.params.id },
-      {
-        $pull: {
-          feedback: {
-            _id: req.params.feedbackId
-          }
-        }
-      },
-      { new: true }
-    );
-    res.json(event);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('server error');
-  }
-});
->>>>>>> feedback-deen
 
 module.exports = router;

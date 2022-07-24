@@ -22,28 +22,24 @@ const MeetupItem = ({
   setAlert
 }) => {
   const [isCreator, setIsCreator] = useState(false);
-<<<<<<< HEAD
   const [profiles, setProfiles] = useState([]);
-  const [profileId, setProfileId] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-=======
   const [profileId, setProfileId] = useState('');
->>>>>>> feedback-deen
+  const [isLoading, setIsLoading] = useState(false);
   let profilesId = [];
 
   useEffect(() => {
     setProfiles([]);
     const config = {
       headers: {
-        "Content-Type": "application/json",
-        "x-auth-token": localStorage.getItem("token"),
-      },
+        'Content-Type': 'application/json',
+        'x-auth-token': localStorage.getItem('token')
+      }
     };
     async function fetchProfile(profile) {
       const res = await axios.get(`/api/profiles/${profile}`, config);
       setProfiles((prev) => [
         ...prev,
-        { name: res.data.name, Id: res.data._id },
+        { name: res.data.name, Id: res.data._id }
       ]);
     }
 
@@ -51,7 +47,7 @@ const MeetupItem = ({
       const res = await axios.get(`/api/users/find/${user._id}`);
       setProfiles((prev) => [
         ...prev,
-        { name: res.data.name, Id: res.data._id },
+        { name: res.data.name, Id: res.data._id }
       ]);
       if (res.data.profiles.length > 0) {
         res.data.profiles.map((profile) => {
@@ -81,14 +77,10 @@ const MeetupItem = ({
         'x-auth-token': localStorage.getItem('token')
       }
     };
-<<<<<<< HEAD
-    if (profileId === "" || profileId === `${user._id}`) {
-=======
-    if (profileId === '' || profileId === `${user.name}`) {
->>>>>>> feedback-deen
+    if (profileId === '' || profileId === `${user._id}`) {
       try {
         await axios.post(`/api/users/event/${user._id}`, { _id }, config);
-        setAlert("Event added to your profile", "success");
+        setAlert('Event added to your profile', 'success');
       } catch (error) {
         setAlert(error.response.data.msg, 'danger');
         console.log(error.response.data.msg);
@@ -96,7 +88,7 @@ const MeetupItem = ({
     } else {
       try {
         await axios.post(`/api/profiles/event/${profileId}`, { _id }, config);
-        setAlert("Event added to your profile", "success");
+        setAlert('Event added to your profile', 'success');
       } catch (error) {
         setAlert(error.response.data.msg, 'danger');
         console.log(error.response.data.msg);
