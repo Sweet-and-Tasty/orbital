@@ -78,7 +78,7 @@ function FeedbackForm() {
       <form onSubmit={handleSubmit}>
         <h1 className={classes.centerText}>how would you rate this class?</h1>
         <FeedbackRating select={(rating) => setRating(rating)} />
-        <div className="input-group">
+        <div className={classes.inputGroup}>
           <input
             onChange={handleTextChange}
             type="text"
@@ -90,7 +90,7 @@ function FeedbackForm() {
           </Button>
         </div>
         {/* if theres a message then the div message */}
-        {message && <div className="message">{message}</div>}
+        {message && <div className={classes.message}>{message}</div>}
       </form>
     </FeedbackCard>
   );
