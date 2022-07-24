@@ -68,9 +68,7 @@ function FeedbackForm() {
     setBtnDisabled(true);
     setMessage('Feedback submitted successfully!');
 
-    setTimeout(function () {
-      window.location.reload();
-    }, 10);
+    window.location.reload();
   };
 
   return (
