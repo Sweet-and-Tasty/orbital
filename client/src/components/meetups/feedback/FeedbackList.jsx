@@ -27,7 +27,7 @@ function FeedbackList() {
     console.log(feedbackArray);
   }, []);
 
-  // deleteFeedback
+  // deleteFeedback only if youre the creator of the feedback
   const deleteFeedback = async (feedbackId) => {
     if (window.confirm("Are you sure you want to delete this feedback?")) {
       await axios.delete(`/api/event/feedback/${id}/${feedbackId}`);

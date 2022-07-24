@@ -45,7 +45,7 @@ function FeedbackForm() {
       text,
       rating
     };
-    console.log(feedbackData);
+    // console.log(feedbackData);
     try {
       const res = axios.post(`/api/event/feedback/${id}`, feedbackData);
       setCount(count + 1);
@@ -68,9 +68,7 @@ function FeedbackForm() {
     setBtnDisabled(true);
     setMessage('Feedback submitted successfully!');
 
-    setTimeout(function () {
-      window.location.reload();
-    }, 10);
+    window.location.reload();
   };
 
   return (
