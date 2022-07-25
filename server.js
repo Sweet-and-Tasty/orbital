@@ -3,11 +3,10 @@ const config = require("config");
 const stripeSecretKey = process.env.stripeSecretKey;
 const stripe = require("stripe")(stripeSecretKey);
 const path = require("path");
-
 const { v4: uuidv4 } = require("uuid");
 const express = require("express");
 const connectDB = require("./config/db");
-
+require("dotenv").config();
 const app = express();
 
 //connect database
