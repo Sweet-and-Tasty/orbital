@@ -16,7 +16,7 @@ app.use(cors());
 
 //init middleware
 app.use(express.json({ extended: false }));
-app.get("/", (req, res) => res.send("api running"));
+//app.get("/", (req, res) => res.send("api running"));
 
 //define routes
 app.use("/api/users", require("./routes/api/users"));
