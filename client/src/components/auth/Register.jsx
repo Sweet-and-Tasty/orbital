@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
-import { connect } from "react-redux";
-import { setAlert } from "../../actions/alert";
-import { register } from "../../actions/auth";
-import PropTypes from "prop-types";
-import { FaLock } from "react-icons/fa";
+import React, { useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
+import PropTypes from 'prop-types';
+import { FaLock } from 'react-icons/fa';
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFromData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    password2: "",
+    name: '',
+    email: '',
+    password: '',
+    password2: ''
   });
 
   const { name, email, password, password2 } = formData;
@@ -22,9 +22,11 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      setAlert("passwords do not match", "danger"); //danger is a css style
+      setAlert('passwords do not match', 'danger'); //danger is a css style
     } else {
       register({ name, email, password });
+      // navigate to dashboard page
+      Navigate('/dashboard');
     }
   };
 
@@ -39,14 +41,14 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
           <div>
             <img
               className="mx-auto h-auto w-auto"
-              src={require("../../img/EASports.png")}
+              src={require('../../img/EASports.png')}
               alt="Workflow"
             />
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Create New Account
             </h2>
             <p className="mt-2 text-center text-sm text-white-600">
-              Already have an account?{" "}
+              Already have an account?{' '}
               <Link
                 to="/login"
                 className="font-medium text-white hover:text-blue-500"
@@ -155,14 +157,14 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 export default connect(mapStateToProps, {
   setAlert,
-  register,
+  register
 })(Register);
