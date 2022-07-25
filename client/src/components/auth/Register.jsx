@@ -25,8 +25,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
       setAlert('passwords do not match', 'danger'); //danger is a css style
     } else {
       register({ name, email, password });
-      // navigate to dashboard page
-      Navigate('/dashboard');
     }
   };
 
