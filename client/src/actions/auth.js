@@ -17,11 +17,6 @@ export const loadUser = () => async (dispatch) => {
     setAuthToken(localStorage.token);
   }
   try {
-    const config = {
-      headers: {
-        "x-auth-token": localStorage.token,
-      },
-    };
     const res = await axios.get("/api/auth", config);
 
     dispatch({
@@ -67,7 +62,7 @@ export const login = (email, password) => async (dispatch) => {
       payload: res.data,
     });
 
-    loadUser();
+    dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {

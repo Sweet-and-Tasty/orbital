@@ -19,9 +19,8 @@ function DisplayProfile({ _id, auth: { user } }) {
   }, []);
 
   const handleClick = async (e) => {
-    e.preventDefault();
     await axios.post(`/api/users/remove-profile/${user._id}`, { _id });
-    const res = await axios.delete(`/api/profiles/${_id}`);
+    await axios.delete(`/api/profiles/${_id}`);
     window.location.reload(true);
   };
 
@@ -42,7 +41,7 @@ function DisplayProfile({ _id, auth: { user } }) {
         </div>
       </div>
       <button
-        onSubmit={(e) => handleClick(e)}
+        onClick={(e) => handleClick(e)}
         className="group relative w-full flex justify-center py-2 px-4 border
         border-transparent text-sm font-sm rounded-md text-white bg-blue-600
         hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2
