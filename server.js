@@ -2,6 +2,7 @@ const cors = require("cors");
 const config = require("config");
 const stripeSecretKey = process.env.stripeSecretKey;
 const stripe = require("stripe")(stripeSecretKey);
+const path = require("path");
 
 const { v4: uuidv4 } = require("uuid");
 const express = require("express");
@@ -24,6 +25,13 @@ app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/event", require("./routes/api/event"));
 app.use("/api/email", require("./routes/api/email"));
 app.use("/api/profiles", require("./routes/api/profiles"));
+
+//deployment
+app.use(express.static(path.resolve(__dirname, "client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "/client/build", "index.html"));
+});
 
 //stripe payment
 
