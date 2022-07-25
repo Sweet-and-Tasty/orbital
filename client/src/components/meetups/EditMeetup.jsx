@@ -1,15 +1,15 @@
-import { useState } from "react";
-import axios from "axios";
-import { setAlert } from "../../actions/alert";
-import Card from "../ui/Card";
-import classes from "./NewMeetupForm.module.css";
-import { Navigate } from "react-router-dom";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { TextField } from "@mui/material";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from 'react';
+import axios from 'axios';
+import { setAlert } from '../../actions/alert';
+import AddNewFormCard from '../ui/AddNewFormCard';
+import classes from './NewMeetupForm.module.css';
+import { Navigate } from 'react-router-dom';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { TextField } from '@mui/material';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 function EditMeetup(props) {
   let { id } = useParams();
@@ -43,27 +43,27 @@ function EditMeetup(props) {
       title: title,
       image: image,
       address: address,
-      description: description,
+      description: description
     };
 
     console.log(meetupData);
     try {
       const config = {
         headers: {
-          "Content-Type": "application/json",
-          "x-auth-token": localStorage.getItem("token"),
-        },
+          'Content-Type': 'application/json',
+          'x-auth-token': localStorage.getItem('token')
+        }
       };
       const res = axios.post(`/api/event/${id}`, meetupData, config);
       if (res.status === 200) {
-        setAlert("Meetup Edited successfully", "success");
+        setAlert('Meetup Edited successfully', 'success');
         return <Navigate to="/all-meetups" />;
       }
     } catch (err) {
       const errors = err.response.data.errors;
       if (errors) {
         errors.forEach((error) => {
-          setAlert(error.msg, "danger");
+          setAlert(error.msg, 'danger');
         });
       }
     }
@@ -95,9 +95,9 @@ function EditMeetup(props) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
-      <Card>
+      <AddNewFormCard>
         <form className={classes.form} onSubmit={(e) => submitHandler(e)}>
-          <div className={(classes.control, "mb-5")}>
+          <div className={(classes.control, 'mb-5')}>
             <DateTimePicker
               label="Start Time"
               value={startDateTime}
@@ -105,7 +105,7 @@ function EditMeetup(props) {
               renderInput={(params) => <TextField {...params} />}
             />
           </div>
-          <div className={(classes.control, "mb-1")}>
+          <div className={(classes.control, 'mb-1')}>
             <DateTimePicker
               className="text-xl font-bold pb-2 mt-2"
               label="End Time"
@@ -156,7 +156,7 @@ function EditMeetup(props) {
             <button>Edit Course/ Class</button>
           </div>
         </form>
-      </Card>
+      </AddNewFormCard>
     </LocalizationProvider>
   );
 }
