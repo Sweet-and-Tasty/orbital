@@ -1,6 +1,6 @@
 const cors = require("cors");
 const config = require("config");
-const stripeSecretKey = config.get("stripeSecretKey");
+const stripeSecretKey = process.env.stripeSecretKey;
 const stripe = require("stripe")(stripeSecretKey);
 
 const { v4: uuidv4 } = require("uuid");

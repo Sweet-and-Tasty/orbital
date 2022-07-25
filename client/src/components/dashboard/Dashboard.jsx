@@ -42,21 +42,18 @@ const Dashboard = (props) => {
   }
 
   const handleEventClick = (clickInfo) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete the event '${clickInfo.event.title}'`
-      )
-    ) {
-      clickInfo.event.remove();
+    if (window.confirm(`view '${clickInfo.event.title}'`)) {
+      window.open("/my-meetups");
     }
   };
 
   const handleDateSelect = (selectInfo) => {
-    let title = prompt("Please enter a new title for your event");
-    let calendarApi = selectInfo.view.calendar;
-
-    calendarApi.unselect(); // clear date selection
+    if (window.confirm("Create new Event?")) {
+      console.log(Date(selectInfo.start));
+      window.open(`/new-meetup/${selectInfo.start}`);
+    }
   };
+
   return (
     <div className="container mx-auto my-auto ">
       <h1 className="page-title">Welcome to dashboard</h1>

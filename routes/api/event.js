@@ -143,7 +143,7 @@ router.post(
 //@access Private
 
 router.post("/feedback/:id", auth, async (req, res) => {
-  const { text } = req.body;
+  const { text, rating } = req.body;
   try {
     let event = await Event.findOneAndUpdate(
       { _id: req.params.id },
@@ -151,6 +151,7 @@ router.post("/feedback/:id", auth, async (req, res) => {
         $push: {
           feedback: {
             poster: req.user.id,
+            rating,
             text,
           },
         },

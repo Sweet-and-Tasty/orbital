@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 const express = require("express");
 const router = express.Router();
 const config = require("config");
-const gmailAppPassword = config.get("gmailAppPassword");
+const gmailAppPassword = process.env.gmailAppPassword;
 
 //nodemailer
 

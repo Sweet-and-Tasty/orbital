@@ -1,30 +1,30 @@
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Navbar from './components/layout/Navbar';
-import Landing from './components/layout/Landing';
-import Register from './components/auth/Register';
-import Login from './components/auth/Login';
-import Alert from './components/layout/Alert';
-import PrivateRoute from './components/routing/PrivateRoute';
-import { loadUser } from './actions/auth';
-import { useEffect } from 'react';
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/layout/Navbar";
+import Landing from "./components/layout/Landing";
+import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
+import Alert from "./components/layout/Alert";
+import PrivateRoute from "./components/routing/PrivateRoute";
+import { loadUser } from "./actions/auth";
+import { useEffect } from "react";
 
 //redux
-import { Provider } from 'react-redux';
-import store from './store';
+import { Provider } from "react-redux";
+import store from "./store";
 
 // added in myself
 // import { Route, Switch } from 'react-router-dom';
-import AllMeetupsPage from './pages/AllMeetupsPage';
-import NewMeetupPage from './pages/NewMeetup';
-import Dashboard from './components/dashboard/Dashboard';
-import Credit from './pages/Credit';
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
-import EditMeetup from './components/meetups/EditMeetup';
-import MyMeetupsPage from './pages/MyMeetupsPage';
-import AddProfile from './pages/AddProfile';
-import FeedbackPage from './pages/FeedbackPage';
+import AllMeetupsPage from "./pages/AllMeetupsPage";
+import NewMeetupPage from "./pages/NewMeetup";
+import Dashboard from "./components/dashboard/Dashboard";
+import Credit from "./pages/Credit";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import EditMeetup from "./components/meetups/EditMeetup";
+import MyMeetupsPage from "./pages/MyMeetupsPage";
+import AddProfile from "./pages/AddProfile";
+import FeedbackPage from "./pages/FeedbackPage";
 
 function App() {
   useEffect(() => {
@@ -54,6 +54,11 @@ function App() {
           <Route
             exact
             path="/new-meetup"
+            element={<PrivateRoute component={NewMeetupPage} />}
+          />
+          <Route
+            exact
+            path="/new-meetup/:start"
             element={<PrivateRoute component={NewMeetupPage} />}
           />
           <Route

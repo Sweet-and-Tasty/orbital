@@ -1,33 +1,32 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import Button from './feedbackstuff/Button';
-import axios from 'axios';
-import { setAlert } from '../../../actions/alert';
-import { Navigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
-import FeedbackRating from './FeedbackRating';
-import FeedbackFormCard from './feedbackstuff/FeedbackFormCard';
-import FeedbackCard from '../../ui/FeedbackCard';
-import classes from './Feedback.module.css';
+import React, { useEffect } from "react";
+import { useState } from "react";
+import Button from "./feedbackstuff/Button";
+import axios from "axios";
+import { setAlert } from "../../../actions/alert";
+import { Navigate } from "react-router-dom";
+import PropTypes from "prop-types";
+import { useParams } from "react-router-dom";
+import FeedbackRating from "./FeedbackRating";
+import FeedbackCard from "../../ui/FeedbackCard";
+import classes from "./Feedback.module.css";
 
 function FeedbackForm() {
   const [count, setCount] = useState(0);
   const { id } = useParams();
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const [rating, setRating] = useState(10);
   const [btnDisabled, setBtnDisabled] = useState(true);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   useEffect(() => {}, [count]);
 
   const handleTextChange = (e) => {
-    if (text === '') {
+    if (text === "") {
       setBtnDisabled(true);
       setMessage(null);
-    } else if (text !== '' && text.trim().length <= 10) {
+    } else if (text !== "" && text.trim().length <= 10) {
       setBtnDisabled(true);
-      setMessage('Feedback must be at least 10 characters long');
+      setMessage("Feedback must be at least 10 characters long");
     } else {
       //if text is not empty and is more than 10 characters long
       setBtnDisabled(false);
@@ -43,14 +42,14 @@ function FeedbackForm() {
     e.preventDefault();
     const feedbackData = {
       text,
-      rating
+      rating,
     };
     // console.log(feedbackData);
     try {
       const res = axios.post(`/api/event/feedback/${id}`, feedbackData);
       setCount(count + 1);
       if (res.status === 200) {
-        setAlert('Feedback added successfully', 'success');
+        setAlert("Feedback added successfully", "success");
         return <Navigate to="/api/event/feedback/:id" />;
         // forceUpdate();
       }
@@ -58,15 +57,15 @@ function FeedbackForm() {
       const errors = err.response.data.errors;
       if (errors) {
         errors.forEach((error) => {
-          setAlert(error.msg, 'danger');
+          setAlert(error.msg, "danger");
         });
       }
     }
 
-    setText('');
+    setText("");
     setRating(10);
     setBtnDisabled(true);
-    setMessage('Feedback submitted successfully!');
+    setMessage("Feedback submitted successfully!");
 
     window.location.reload();
   };
@@ -96,7 +95,7 @@ function FeedbackForm() {
 
 FeedbackForm.propTypes = {
   auth: PropTypes.object.isRequired,
-  setAlert: PropTypes.func.isRequired
+  setAlert: PropTypes.func.isRequired,
 };
 
 export default FeedbackForm;
