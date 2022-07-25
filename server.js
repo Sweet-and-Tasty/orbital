@@ -27,10 +27,10 @@ app.use("/api/email", require("./routes/api/email"));
 app.use("/api/profiles", require("./routes/api/profiles"));
 
 //deployment
-app.use(express.static(path.resolve(__dirname, "client/build")));
+app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "/client/build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
 
 //stripe payment
