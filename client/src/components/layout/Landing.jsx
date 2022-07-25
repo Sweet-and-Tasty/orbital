@@ -14,8 +14,11 @@ const Landing = () => {
             Log in to receive news about the class and your child's progress!
           </p>
 
-          <div className="buttons">
-            <Link to="/register" className="btn btn-outline">
+          <div className="buttons z-9999">
+            <Link
+              to="/register"
+              className="btn btn-outline z-9999 hover:text-white"
+            >
               <FaUserPlus className="inline pr-2 text-3xl" />
               Sign Up
             </Link>
