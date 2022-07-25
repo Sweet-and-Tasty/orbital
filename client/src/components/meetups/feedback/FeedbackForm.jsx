@@ -74,7 +74,7 @@ function FeedbackForm() {
   return (
     <FeedbackCard>
       <form onSubmit={handleSubmit}>
-        <h1 className={classes.centerText}>how would you rate this class?</h1>
+        <h1 className={classes.centerText}>How would you rate this class?</h1>
         <FeedbackRating select={(rating) => setRating(rating)} />
         <div className={classes.inputGroup}>
           <input
