@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 const config = require("config");
-const db = process.env.mongoURI;
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(db);
+    await mongoose.connect(
+      "mongodb+srv://czement:qmpz1234@cluster0.tnasn.mongodb.net/orbitalDB?retryWrites=true&w=majority"
+    );
     console.log("mongoDB connected");
   } catch (err) {
     console.error(err.message);
