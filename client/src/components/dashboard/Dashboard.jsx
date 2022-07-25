@@ -8,6 +8,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import { loadUser } from "../../actions/auth";
 
 import momentPlugin from "@fullcalendar/moment";
 
@@ -15,6 +16,7 @@ const Dashboard = (props) => {
   const [events, setEvents] = useState();
 
   useEffect(() => {
+    loadUser();
     const fetchEvents = async () => {
       let mapEvents = [];
       const res = await axios.get("/api/event");
