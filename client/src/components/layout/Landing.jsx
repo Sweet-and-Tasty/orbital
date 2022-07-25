@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FaSignInAlt, FaUserPlus } from 'react-icons/fa';
 
 const Landing = () => {
   return (
@@ -14,7 +14,7 @@ const Landing = () => {
             Log in to receive news about the class and your child's progress!
           </p>
 
-          <div className="buttons z-9999">
+          {/* <div className="buttons z-9999">
             <Link
               to="/register"
               className="btn btn-outline z-9999 hover:text-white"
@@ -26,7 +26,7 @@ const Landing = () => {
               <FaSignInAlt className="inline pr-2 text-3xl" />
               Login
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
