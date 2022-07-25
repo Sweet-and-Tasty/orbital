@@ -6,8 +6,10 @@ import FeedbackCard from "../../ui/FeedbackCard";
 // import FaTimes from 'react-icons/fa/FaTimes';
 // import FaEdit from 'react-icons/fa/FaEdit';
 import { FaTimes } from "react-icons/fa";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-function FeedbackList() {
+function FeedbackList({ auth: { user } }) {
   let { id } = useParams();
   let tempFeedback = [];
   const [feedbackArray, setFeedbackArray] = useState([]);
@@ -48,12 +50,14 @@ function FeedbackList() {
             <ul className={classes.list} key={index}>
               <FeedbackCard>
                 <div className={classes.numDisplay}>{feedbackItem.rating}</div>
-                <button
-                  className={classes.close}
-                  onClick={() => deleteFeedback(feedbackItem._id)}
-                >
-                  <FaTimes color="#bb13bb" />
-                </button>
+                {feedbackItem.poster === user._id && (
+                  <button
+                    className={classes.close}
+                    onClick={() => deleteFeedback(feedbackItem._id)}
+                  >
+                    <FaTimes color="#bb13bb" />
+                  </button>
+                )}
                 {/* <button onClick={() => editFeedback(item)} className="edit">
                   <FaEdit color="purple" />
                 </button> */}
@@ -67,4 +71,12 @@ function FeedbackList() {
   );
 }
 
-export default FeedbackList;
+FeedbackList.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(FeedbackList);
