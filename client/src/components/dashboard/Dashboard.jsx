@@ -9,10 +9,12 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { loadUser } from "../../actions/auth";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import momentPlugin from "@fullcalendar/moment";
 
-const Dashboard = (props) => {
+const Dashboard = ({ auth: { user } }) => {
   const [events, setEvents] = useState();
 
   useEffect(() => {
@@ -21,11 +23,13 @@ const Dashboard = (props) => {
       let mapEvents = [];
       const res = await axios.get("/api/event");
       res.data.map((event) => {
-        mapEvents.push({
-          id: event._id,
-          title: event.title,
-          start: moment(event.startDateTime).format(),
-        });
+        if (user.event.includes(event._id)) {
+          mapEvents.push({
+            id: event._id,
+            title: event.title,
+            start: moment(event.startDateTime).format(),
+          });
+        }
       });
 
       setEvents(mapEvents);
@@ -94,6 +98,12 @@ const Dashboard = (props) => {
   );
 };
 
-Dashboard.propTypes = {};
+Dashboard.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Dashboard);
