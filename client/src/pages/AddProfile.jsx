@@ -46,7 +46,7 @@ function AddProfile({ auth: { user } }) {
 
   return (
     <>
-      <div className="flex justify-center mt-10">
+      <div className="flex justify-center mt-20 pt-5 relative -z-9999">
         {profilesId.map((profile, index) => (
           <DisplayProfile _id={profile.Id} key={index} />
         ))}
