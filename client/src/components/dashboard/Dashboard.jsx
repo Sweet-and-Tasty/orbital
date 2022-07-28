@@ -1,29 +1,35 @@
 // this file should no longer be here and should be using calendar instead
 
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import axios from 'axios';
-import moment from 'moment';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import React, { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import moment from "moment";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import momentPlugin from "@fullcalendar/moment";
+import { connect } from "react-redux";
+import { loadUser } from "../../actions/auth";
+import PropTypes from "prop-types";
 
-import momentPlugin from '@fullcalendar/moment';
-
-const Dashboard = (props) => {
+const Dashboard = ({ auth: { user } }) => {
   const [events, setEvents] = useState();
 
   useEffect(() => {
+    loadUser();
+    console.log(user);
     const fetchEvents = async () => {
       let mapEvents = [];
-      const res = await axios.get('/api/event');
+      const res = await axios.get("/api/event");
       res.data.map((event) => {
-        mapEvents.push({
-          id: event._id,
-          title: event.title,
-          start: moment(event.startDateTime).format()
-        });
+        if (user.events.includes(event._id)) {
+          mapEvents.push({
+            id: event._id,
+            title: event.title,
+            start: moment(event.startDateTime).format(),
+          });
+        }
       });
 
       setEvents(mapEvents);
@@ -43,12 +49,12 @@ const Dashboard = (props) => {
 
   const handleEventClick = (clickInfo) => {
     if (window.confirm(`view event '${clickInfo.event.title}' ?`)) {
-      window.open('/my-meetups');
+      window.open("/my-meetups");
     }
   };
 
   const handleDateSelect = (selectInfo) => {
-    if (window.confirm('create new event?')) {
+    if (window.confirm("create new event?")) {
       window.open(`/new-meetup/${selectInfo.start}`);
     }
   };
@@ -60,13 +66,13 @@ const Dashboard = (props) => {
           dayGridPlugin,
           timeGridPlugin,
           interactionPlugin,
-          momentPlugin
+          momentPlugin,
         ]}
-        titleFormat={'MMMM YYYY'}
+        titleFormat={"MMMM YYYY"}
         headerToolbar={{
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
         initialView="dayGridMonth"
         editable={false}
@@ -75,7 +81,7 @@ const Dashboard = (props) => {
         dayMaxEvents={true}
         //weekends={this.state.weekendsVisible}
         events={events} // alternatively, use the `events` setting to fetch from a feed
-        eventTimeFormat={'h:mm a'}
+        eventTimeFormat={"h:mm a"}
         select={handleDateSelect}
         eventContent={EventContent} // custom render function
         eventClick={handleEventClick}
@@ -90,6 +96,12 @@ const Dashboard = (props) => {
   );
 };
 
-Dashboard.propTypes = {};
+Dashboard.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Dashboard);
