@@ -23,7 +23,7 @@ const Dashboard = ({ auth: { user } }) => {
       let mapEvents = [];
       const res = await axios.get("/api/event");
       res.data.map((event) => {
-        if (user.event.includes(event._id)) {
+        if (user.events.includes(event._id)) {
           mapEvents.push({
             id: event._id,
             title: event.title,
