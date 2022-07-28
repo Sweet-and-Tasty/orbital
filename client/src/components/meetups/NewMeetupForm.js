@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { setAlert } from "../../actions/alert";
 import AddNewFormCard from "../ui/AddNewFormCard";
@@ -9,8 +9,11 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { TextField } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
+import { loadUser } from "../../actions/auth";
+import PropTypes from "prop-types";
 
-function NewMeetupForm(props) {
+function NewMeetupForm({ auth: { user } }) {
   const { start } = useParams();
   const [startDateTime, setStartDateTime] = useState(
     start ? new Date(start) : new Date()
@@ -20,6 +23,10 @@ function NewMeetupForm(props) {
   const imageInputRef = useRef();
   const addressInputRef = useRef();
   const descriptionInputRef = useRef();
+
+  useEffect(() => {
+    loadUser();
+  }, []);
 
   const submitHandler = async () => {
     const enteredTitle = titleInputRef.current.value;
@@ -36,10 +43,11 @@ function NewMeetupForm(props) {
       description: enteredDescription,
     };
     try {
-      const res = axios.post("api/event", meetupData);
+      const res = await axios.post("api/event", meetupData);
       if (res.status === 200) {
+        await axios.post(`api/users/event/${user._id}`, res.data);
         setAlert("Meetup added successfully", "success");
-        return <Navigate to="/" />;
+        //return <Navigate to="/dashboard" />;
       }
     } catch (err) {
       const errors = err.response.data.errors;
@@ -110,4 +118,12 @@ function NewMeetupForm(props) {
   );
 }
 
-export default NewMeetupForm;
+NewMeetupForm.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(NewMeetupForm);

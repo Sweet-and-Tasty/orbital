@@ -46,9 +46,9 @@ function AddProfile({ auth: { user } }) {
 
   return (
     <>
-      <div className="flex justify-center mt-10">
+      <div className="flex justify-center mt-20 pt-5 relative -z-9999">
         {profilesId.map((profile, index) => (
-          <DisplayProfile _id={profile.Id} key={index} />
+          <DisplayProfile _id={profile.Id} key={index} className="-z-9999" />
         ))}
       </div>
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">

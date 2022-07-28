@@ -25,9 +25,9 @@ function DisplayProfile({ _id, auth: { user } }) {
   };
 
   return (
-    <div className="pr-10 pl-10">
-      <div class="avatar">
-        <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+    <div className="pr-10 pl-10 -z-9999">
+      <div className="avatar -z-9999">
+        <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 -z-9999">
           {avatar ? (
             <img src={avatar} />
           ) : (
@@ -35,8 +35,8 @@ function DisplayProfile({ _id, auth: { user } }) {
           )}
         </div>
       </div>
-      <div class="info">
-        <div class="name">
+      <div className="info">
+        <div className="name">
           <h1 className="text-center">{name}</h1>
         </div>
       </div>

@@ -20,8 +20,8 @@ import {
 export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   //span is used to hide the navbar when the screen is too small
   const authLinks = (
-    <div className="flex-1 px-2 mx-2">
-      <div className="flex justify-end">
+    <div className="flex-1 px-2 mx-2 z-999999">
+      <div className="flex justify-end z-999999">
         <Link
           to="/dashboard"
           className="btn btn-ghost btn-sm rounded-btn flex-1"
@@ -30,16 +30,16 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           Dashboard
         </Link>
 
-        <div class="dropdown dropdown-hover inline btn btn-ghost btn-sm rounded-btn flex-1 relative z-9999 ">
+        <div class="dropdown dropdown-hover inline btn btn-ghost btn-sm rounded-btn flex-1 relative z-999999 ">
           <label className="m-1">
             <FaDragon className="inline pr-2 text-3xl" />
             Classes
           </label>
 
-          <ul className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 z-9999 ">
+          <ul className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 relative z-999999 overflow-auto">
             <Link
               to="/my-meetups"
-              className="btn btn-ghost btn-sm rounded-btn flex-1 "
+              className="btn btn-ghost btn-sm rounded-btn flex-1 relative z-999999"
             >
               <FaSith className="inline pr-2 text-3xl" />
               My Classes
@@ -47,7 +47,7 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
             <Link
               to="/all-meetups"
-              className="btn btn-ghost btn-sm rounded-btn flex-1"
+              className="btn btn-ghost btn-sm rounded-btn flex-1 relative z-999999"
             >
               <FaRebel className="inline pr-2 text-3xl" />
               All Classes
@@ -55,7 +55,7 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
             <Link
               to="/new-meetup"
-              className="btn btn-ghost btn-sm rounded-btn flex-1"
+              className="btn btn-ghost btn-sm rounded-btn flex-1 relative z-99999999999"
             >
               <FaJediOrder className="inline pr-2 text-3xl" />
               Add New Class
@@ -105,7 +105,7 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     </>
   );
   return (
-    <nav class="navbar shadow-lg bg-neutral text-neutral-content">
+    <nav class="navbar shadow-lg bg-neutral text-neutral-content z-999999">
       <div className="container mx-auto">
         <div className="flex-none px-2 mx-2">
           <Link to="/" className="text-lg font-bold align-middle">
